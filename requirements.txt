@@ -1,0 +1,11 @@
+groq
+sentence-transformers
+chromadb
+python-dotenv
+tqdm
+pytest
+numpy
+pandas
+matplotlib
+datasets
+beir

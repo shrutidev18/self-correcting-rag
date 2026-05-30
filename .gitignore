@@ -1,0 +1,20 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Secrets — never commit this
+.env
+
+# Large data files — too big for GitHub
+data/beir_datasets/
+chroma_db/
+
+# Logs
+logs/
+
+# IDE
+.vscode/
+.idea/
