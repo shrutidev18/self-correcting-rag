@@ -8,7 +8,7 @@ from datasets import load_dataset
 from app.core.retriever import Retriever
 from app.utils.logger import logger
 
-MAX_DOCS   = 5000
+MAX_DOCS   = 20000
 MAX_TEST_Q = 100
 
 def download_and_index():

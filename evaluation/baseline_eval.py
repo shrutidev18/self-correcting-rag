@@ -18,7 +18,6 @@ client = Groq(api_key=config.GROQ_API_KEY)
 
 
 def score_faithfulness(answer: str, contexts: list) -> float:
-    """Is the answer supported by the context?"""
     context_str = "\n".join(contexts)
     prompt = f"""Given the context and answer below, rate how faithful the answer is to the context.
 Score 1 if the answer is fully supported by context.
@@ -44,7 +43,6 @@ Reply with ONLY a number: 0, 0.5, or 1"""
 
 
 def score_answer_relevancy(question: str, answer: str) -> float:
-    """Does the answer address the question?"""
     prompt = f"""Does the answer actually address the question asked?
 Score 1 if fully relevant.
 Score 0.5 if partially relevant.
@@ -69,7 +67,6 @@ Reply with ONLY a number: 0, 0.5, or 1"""
 
 
 def score_context_recall(contexts: list, ground_truth: str) -> float:
-    """Did retrieved context contain the answer?"""
     context_str = "\n".join(contexts)
     prompt = f"""Does the context contain enough information to answer the ground truth?
 Score 1 if context clearly contains the answer.
@@ -97,18 +94,18 @@ Reply with ONLY a number: 0, 0.5, or 1"""
 def run_baseline_evaluation():
     logger.info("Loading test questions...")
     with open(TEST_QUESTIONS_PATH, "r", encoding="utf-8") as f:
-        test_questions = json.load(f)[:50]
+        test_questions = json.load(f)[:100]
 
     logger.info(f"Running evaluation on {len(test_questions)} questions...")
     pipeline = BasicRAGPipeline()
 
-    faithfulness_scores    = []
-    relevancy_scores       = []
-    context_recall_scores  = []
-    individual_results     = []
+    faithfulness_scores   = []
+    relevancy_scores      = []
+    context_recall_scores = []
+    individual_results    = []
 
     for i, q in enumerate(test_questions):
-        logger.info(f"[{i+1}/50] {q['question'][:60]}...")
+        logger.info(f"[{i+1}/{len(test_questions)}] {q['question'][:60]}...")
 
         result   = pipeline.run(q["question"])
         contexts = [c["text"] for c in result["chunks"]]
@@ -129,21 +126,21 @@ def run_baseline_evaluation():
         context_recall_scores.append(c_score)
 
         individual_results.append({
-            "question":        question,
-            "answer":          answer,
-            "faithfulness":    f_score,
+            "question":         question,
+            "answer":           answer,
+            "faithfulness":     f_score,
             "answer_relevancy": r_score,
-            "context_recall":  c_score,
+            "context_recall":   c_score,
         })
 
         logger.info(f"  F={f_score} | R={r_score} | C={c_score}")
 
     scores = {
-        "faithfulness":      round(sum(faithfulness_scores)   / len(faithfulness_scores),   4),
-        "answer_relevancy":  round(sum(relevancy_scores)      / len(relevancy_scores),      4),
-        "context_recall":    round(sum(context_recall_scores) / len(context_recall_scores), 4),
-        "num_questions":     len(test_questions),
-        "individual":        individual_results,
+        "faithfulness":     round(sum(faithfulness_scores)   / len(faithfulness_scores),   4),
+        "answer_relevancy": round(sum(relevancy_scores)      / len(relevancy_scores),      4),
+        "context_recall":   round(sum(context_recall_scores) / len(context_recall_scores), 4),
+        "num_questions":    len(test_questions),
+        "individual":       individual_results,
     }
 
     with open(RESULTS_PATH, "w", encoding="utf-8") as f:

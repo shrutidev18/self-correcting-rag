@@ -1,40 +1,40 @@
 {
-  "faithfulness": 0.87,
-  "answer_relevancy": 0.77,
-  "context_recall": 0.46,
-  "num_questions": 50,
+  "faithfulness": 0.825,
+  "answer_relevancy": 0.8,
+  "context_recall": 0.505,
+  "num_questions": 100,
   "individual": [
     {
       "question": "when did richmond last play in a preliminary final",
-      "answer": "Richmond last played in a preliminary final in 2001. \nThey defeated Greater Western Sydney by 36 points in the 2017 preliminary final to progress to the Grand Final. \nThis was their first preliminary final appearance since 2001.",
+      "answer": "Richmond last played in a preliminary final in 2001. \nThey defeated Greater Western Sydney by 36 points in front of a crowd of 94,258 to progress to the Grand Final against Adelaide. \nThis was their first preliminary final since 2001.",
       "faithfulness": 1.0,
-      "answer_relevancy": 0.0,
+      "answer_relevancy": 1.0,
       "context_recall": 1.0
     },
     {
       "question": "who sang what in the world's come over you",
-      "answer": "Jack Scott sang \"What in the World's Come Over You\". \nIt was his second gold disc winner and reached #5 on the Billboard Hot 100 chart.",
+      "answer": "Jack Scott sang \"What in the World's Come Over You\". It was his second gold disc winner and reached #5 on the Billboard Hot 100.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.0
     },
     {
       "question": "who produces the most wool in the world",
-      "answer": "China is mentioned as having eclipsed Australia in terms of total weight of wool production. However, the exact ranking of the top wool-producing countries is not explicitly stated in the provided context.",
-      "faithfulness": 0.5,
-      "answer_relevancy": 0.5,
-      "context_recall": 0.5
+      "answer": "China is the leading producer of wool, eclipsing Australia in terms of total weight.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
     },
     {
       "question": "where does alaska the last frontier take place",
-      "answer": "The show \"Alaska: The Last Frontier\" takes place at the Kilcher family's homestead, which is located 11 miles outside of Homer, Alaska.",
+      "answer": "The show \"Alaska: The Last Frontier\" takes place at the Kilcher family's homestead, which is located 11 miles outside of Homer.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.0
     },
     {
       "question": "a day to remember all i want cameos",
-      "answer": "The music video for A Day to Remember's song \"All I Want\" features cameos of numerous popular bands and musicians, including Tom Denney, Pete Wentz, Winston McCall of Parkway Drive, and many others. The cameos are listed in the context as part of the music video's release. The video received positive reviews, with Rock Sound calling it \"quite excellent\".",
+      "answer": "The music video for \"All I Want\" by A Day to Remember features cameos of numerous popular bands and musicians, including: Tom Denney (A Day to Remember's former guitarist), Pete Wentz, Winston McCall of Parkway Drive, The Devil Wears Prada, Bring Me the Horizon, Sam Carter of Architects, Tim Lambesis of As I Lay Dying, Silverstein, Andrew WK, August Burns Red, Seventh Star, Matt Heafy of Trivium, Vic Fuentes of Pierce the Veil, Mike Herrera of MxPx, and Set Your Goals.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.5
@@ -48,105 +48,105 @@
     },
     {
       "question": "where did they film diary of a wimpy kid",
-      "answer": "The filming of Diary of a Wimpy Kid took place in Vancouver and wrapped up on October 16, 2009.",
+      "answer": "The filming of Diary of a Wimpy Kid took place in Vancouver.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 1.0
     },
     {
       "question": "where was beasts of the southern wild filmed",
-      "answer": "The film \"Beasts of the Southern Wild\" was filmed in Terrebonne Parish town Montegut. It was also inspired by the rapidly eroding Isle de Jean Charles in Louisiana's Terrebonne Parish.",
+      "answer": "The film \"Beasts of the Southern Wild\" was filmed in Terrebonne Parish town Montegut, which is in Louisiana.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
-      "context_recall": 0.0
+      "context_recall": 0.5
     },
     {
       "question": "what part of the country are you likely to find the majority of the mollisols",
-      "answer": "You are likely to find the majority of the Mollisols in the North American Great Plains.",
+      "answer": "You are likely to find the majority of the mollisols in the North American Great Plains.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.0
     },
     {
       "question": "when did fosters home for imaginary friends start",
-      "answer": "Foster's Home for Imaginary Friends first premiered on Cartoon Network on August 13, 2004, as a 90-minute television film. It began its normal run of twenty-to-thirty-minute episodes on Fridays, at 7 pm, on August 20, 2004.",
-      "faithfulness": 0.5,
+      "answer": "Foster's Home for Imaginary Friends first premiered on Cartoon Network on August 13, 2004, as a 90-minute television film.",
+      "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.0
     },
     {
       "question": "when did us get involved in vietnam war",
-      "answer": "The United States involvement in the Vietnam War began after World War II and escalated into full commitment during the Vietnam War from 1955 to 1975.",
+      "answer": "The U.S. involvement in the Vietnam War escalated in the early 1960s, with troop levels tripling in 1961 and again in 1962. Regular U.S. combat units were deployed beginning in 1965.",
       "faithfulness": 1.0,
-      "answer_relevancy": 0.5,
-      "context_recall": 1.0
-    },
-    {
-      "question": "how are the american declaration of independence and french declaration of the rights of man similar",
-      "answer": "The American Declaration of Independence and the French Declaration of the Rights of Man are similar in that they were both heavily influenced by the political philosophy of the Enlightenment. They also share principles of human rights, as mentioned in the French Declaration of the Rights of Man and of the Citizen. This is evident from the fact that the French declaration was influenced by the U.S. Declaration of Independence, which preceded it.",
-      "faithfulness": 0.5,
       "answer_relevancy": 1.0,
       "context_recall": 0.5
     },
     {
+      "question": "how are the american declaration of independence and french declaration of the rights of man similar",
+      "answer": "Both the American Declaration of Independence and the French Declaration of the Rights of Man were heavily influenced by the political philosophy of the Enlightenment and principles of human rights. They share similarities in their concepts, such as individualism and the separation of powers. This is evident in the context, where it is stated that the French declaration was influenced by the U.S. Declaration of Independence.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
       "question": "what territory was fought over by india and pakistan",
-      "answer": "The Kashmir conflict is a territorial conflict primarily between India and Pakistan.",
+      "answer": "The Kashmir conflict is a territorial conflict primarily between India and Pakistan. They have fought over Kashmir, including the Indo-Pakistani Wars of 1947 and 1965, as well as the Kargil War of 1999. The two countries have also been involved in several skirmishes over control of the Siachen Glacier.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.5
     },
     {
       "question": "when did 17 nam summit meet take place",
-      "answer": "I don't have enough information in the provided context to answer this.",
+      "answer": "The 17th summit of the Non-Aligned Movement (NAM) was scheduled to take place in Venezuela in 2016.",
       "faithfulness": 1.0,
-      "answer_relevancy": 0.0,
+      "answer_relevancy": 0.5,
       "context_recall": 0.0
     },
     {
       "question": "when did jack and the beanstalk take place",
-      "answer": "According to researchers at the universities in Durham and Lisbon, the story of Jack and the Beanstalk originated more than 5,000 years ago. This is based on a widespread archaic story form classified by folklorists as ATU 328 The Boy Who Stole Ogre's Treasure.",
+      "answer": "According to researchers, the story of Jack and the Beanstalk originated more than 5,000 years ago. This is based on a widespread archaic story form classified as ATU 328 The Boy Who Stole Ogre's Treasure.",
       "faithfulness": 1.0,
       "answer_relevancy": 0.5,
-      "context_recall": 1.0
-    },
-    {
-      "question": "what is the meaning of mbbs and md",
-      "answer": "The degrees of MBBS (Bachelor of Medicine and Bachelor of Surgery) and MD (Doctor of Medicine) are mentioned in the context. MBBS is conferred to graduates as a degree, while MD is reserved for research training degree or honorary doctorates.",
-      "faithfulness": 1.0,
-      "answer_relevancy": 1.0,
-      "context_recall": 1.0
-    },
-    {
-      "question": "character sketch of hamlet in the play hamlet",
-      "answer": "Prince Hamlet is the title character and protagonist of William Shakespeare's tragedy Hamlet. He is the Prince of Denmark, nephew to the usurping Claudius, and son of King Hamlet. At the beginning of the play, he struggles with whether, and how, to avenge the murder of his father, and struggles with his own sanity along the way.",
-      "faithfulness": 0.5,
-      "answer_relevancy": 1.0,
       "context_recall": 0.5
     },
     {
-      "question": "who made the song my achy breaky heart",
-      "answer": "The song \"Achy Breaky Heart\" was written by Don Von Tress. It was originally titled \"Don't Tell My Heart\" and performed by The Marcy Brothers in 1991, but later performed by Billy Ray Cyrus on his 1992 album Some Gave All.",
+      "question": "what is the meaning of mbbs and md",
+      "answer": "The degrees of Bachelor of Medicine and Bachelor of Surgery (MBBS) are conferred to graduates of Australian medical schools, while the title of Doctor of Medicine (MD) is reserved for their research training degree or honorary doctorates.",
       "faithfulness": 1.0,
+      "answer_relevancy": 0.5,
+      "context_recall": 0.0
+    },
+    {
+      "question": "character sketch of hamlet in the play hamlet",
+      "answer": "Hamlet is the title character and protagonist of the play. He is the Prince of Denmark, nephew to the usurping Claudius, and son of King Hamlet. At the beginning of the play, he struggles with whether, and how, to avenge the murder of his father, and struggles with his own sanity along the way.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who made the song my achy breaky heart",
+      "answer": "The song \"Achy Breaky Heart\" was written by Don Von Tress and originally performed by The Marcy Brothers in 1991. However, it gained popularity when it was performed by Billy Ray Cyrus on his 1992 album Some Gave All.",
+      "faithfulness": 0.5,
       "answer_relevancy": 1.0,
       "context_recall": 1.0
     },
     {
       "question": "when do the assassination of gianni versace come on",
       "answer": "The season \"The Assassination of Gianni Versace: American Crime Story\" premiered on January 17, 2018.",
-      "faithfulness": 0.5,
+      "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.0
     },
     {
       "question": "where was the movie paint your wagon filmed",
-      "answer": "The movie Paint Your Wagon was filmed near Baker City, Oregon, with other locations including Big Bear Lake, California, and San Bernardino National Forest. The interiors were filmed at Paramount Studios.",
+      "answer": "The movie Paint Your Wagon was shot near Baker City, Oregon, with other locations including Big Bear Lake, California, and San Bernardino National Forest. The interiors were filmed at Paramount Studios.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 1.0
     },
     {
       "question": "who sang go rest high on the mountain",
-      "answer": "Vince Gill sang \"Go Rest High on That Mountain\". He also wrote the song.",
+      "answer": "Vince Gill sang \"Go Rest High on That Mountain\". \nHe recorded the song with background vocals by Ricky Skaggs and Patty Loveless. \nThe song was released as the sixth single from his album When Love Finds You.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.0
@@ -156,53 +156,53 @@
       "answer": "The movie Cooley High was released in 1975.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
-      "context_recall": 0.0
+      "context_recall": 0.5
     },
     {
       "question": "i did two tours of duty in vietnam song",
-      "answer": "The opening theme song of the TV series \"Tour of Duty\" was an abbreviated version of The Rolling Stones hit \"Paint It, Black\". However, the context does not mention a song specifically titled \"i did two tours of duty in vietnam\".",
+      "answer": "The opening theme song of the TV series \"Tour of Duty\" was an abbreviated version of The Rolling Stones hit \"Paint It, Black\". However, this was removed for the US DVD release. The closing theme song was an instrumental, synthesized tune with a distinctive Asian sound mixed in with acoustic guitar, performed by Joseph Conlan.",
       "faithfulness": 1.0,
-      "answer_relevancy": 0.0,
+      "answer_relevancy": 0.5,
       "context_recall": 0.0
     },
     {
       "question": "where is may i come in madam serial",
-      "answer": "The \"May I Come In Madam?\" serial premiered on 7 March 2016 on Life OK and aired Monday to Friday.",
+      "answer": "The \"May I Come In Madam?\" serial premiered on 7 March 2016 on Life OK and aired Monday to Friday. It ended on 25 August 2017 due to the channel's new line-up policy.",
       "faithfulness": 1.0,
       "answer_relevancy": 0.0,
       "context_recall": 1.0
     },
     {
       "question": "who plays sonny's father in general hospital",
-      "answer": "The actor who plays Sonny's father, Mike Corbin, in General Hospital is Ron Hale.",
-      "faithfulness": 1.0,
+      "answer": "Ron Hale plays the recurring role of Mike Corbin, the father of mobster Sonny Corinthos in the ABC soap opera General Hospital.",
+      "faithfulness": 0.5,
       "answer_relevancy": 1.0,
       "context_recall": 1.0
     },
     {
       "question": "when was the first heart transplant performed in the world",
-      "answer": "The first human-to-human heart transplant was performed by Christiaan Barnard on December 3, 1967. However, it's also mentioned that James Hardy did a xenotransplant in 1964, which was the second overall heart transplant.",
+      "answer": "The first human-to-human heart transplant was performed by Christiaan Barnard on December 3, 1967. However, it is also mentioned that James Hardy did a xenotransplant in 1964, which was the second overall heart transplant.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 1.0
     },
     {
       "question": "who does the voice of arby's commercial",
-      "answer": "Ving Rhames does the voice of Arby's commercial with the catchline 'Arby's, we have the meats!'",
+      "answer": "Ving Rhames does the voice of Arby's commercial, with the catchline 'Arby's, we have the meats!'",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 1.0
     },
     {
       "question": "when did the us military start using hummers",
-      "answer": "I don't have enough information in the provided context to answer this.",
+      "answer": "The U.S. Army drafted final specifications for the High Mobility Multipurpose Wheeled Vehicle (HMMWV) in 1979. However, the exact date when the U.S. military started using Hummers is not specified in the provided context.",
       "faithfulness": 1.0,
-      "answer_relevancy": 0.0,
+      "answer_relevancy": 0.5,
       "context_recall": 1.0
     },
     {
       "question": "what time do they stop selling alcohol in south carolina",
-      "answer": "In South Carolina, the retail sale of liquor statewide is permitted from 9 a.m. until 7 p.m. Monday–Saturday. Sunday sales are banned by state law, but counties and cities may hold referendums to allow Sunday sales of beer and wine only.",
+      "answer": "In South Carolina, the retail sale of liquor is permitted from 9 a.m. until 7 p.m. Monday–Saturday. Sunday sales are banned by state law, but counties and cities may hold referendums to allow Sunday sales of beer and wine only.",
       "faithfulness": 1.0,
       "answer_relevancy": 0.5,
       "context_recall": 1.0
@@ -216,44 +216,44 @@
     },
     {
       "question": "what year did they stop making impala ss",
-      "answer": "The Impala SS was available until 1969, and then there would be no Impala SS for 1970. However, the Impala SS was reintroduced in 1994.",
+      "answer": "The Impala SS was discontinued after 1969, but it was reintroduced in 1994. However, it's not clear if it was a direct continuation of the previous model.",
       "faithfulness": 0.5,
-      "answer_relevancy": 1.0,
+      "answer_relevancy": 0.5,
       "context_recall": 1.0
     },
     {
       "question": "amusement park on north carolina south carolina border",
-      "answer": "Carowinds is an amusement park located on the border between North and South Carolina. It is situated adjacent to Interstate 77 in Charlotte and Fort Mill, respectively. The park opened on March 31, 1973.",
+      "answer": "Carowinds is an amusement park located on the border between North and South Carolina. It is situated adjacent to Interstate 77 in Charlotte and Fort Mill. The park opened on March 31, 1973.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.0
     },
     {
       "question": "does kirby vacuum still sell door to door",
-      "answer": "Yes, according to the context, Kirby's products are still sold via in-home door-to-door demonstrations. This is mentioned in Chunk 1.",
+      "answer": "According to the context, Kirby's products are only sold via in-home door-to-door demonstrations. This suggests that Kirby vacuum still sells door to door.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.0
     },
     {
       "question": "who does the voice of madame gazelle in peppa pig",
-      "answer": "Morwenna Banks is known for her roles as Mummy Pig, Madame Gazelle, and Dr Hamster in the children's series Peppa Pig.",
+      "answer": "Morwenna Banks is a British comedy actress, writer and producer known for her roles as Mummy Pig, Madame Gazelle, and Dr Hamster in the children's series Peppa Pig.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 1.0
     },
     {
       "question": "who won the battle of picacho pass in arizona",
-      "answer": "The Confederates initially had the upper hand, as they were able to fire on the Union cavalry and cause several casualties. However, three of the Confederates surrendered, and the Union cavalry was able to secure one prisoner. Despite this, the Union cavalry ultimately broke off the fight and retreated, allowing the Confederates to escape and carry a warning to Tucson. So, it can be said that the Confederates won the battle in the sense that they were able to escape and achieve their objective, but the Union cavalry was able to secure a prisoner and inflict some casualties.",
-      "faithfulness": 1.0,
+      "answer": "The Confederates won the Battle of Picacho Pass in Arizona, as they were able to defeat the Union cavalry and escape, leaving the Union army leaderless and broken off the fight.",
+      "faithfulness": 0.0,
       "answer_relevancy": 1.0,
       "context_recall": 1.0
     },
     {
       "question": "who gave the motto back to the vedas",
-      "answer": "Dayananda Saraswati gave the \"back to the Vedas\" message.",
-      "faithfulness": 0.5,
-      "answer_relevancy": 1.0,
+      "answer": "I don't have enough information in the provided context to answer this.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
       "context_recall": 1.0
     },
     {
@@ -265,17 +265,17 @@
     },
     {
       "question": "book that led to the meat inspection act",
-      "answer": "The book that led to the Meat Inspection Act is \"The Jungle\" by Upton Sinclair.",
-      "faithfulness": 1.0,
+      "answer": "The book that led to the meat inspection act was \"The Jungle\" by Upton Sinclair.",
+      "faithfulness": 0.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.0
     },
     {
       "question": "where does a hamster live in the wild",
-      "answer": "Hamsters live in the wild underground during the day to avoid being caught by predators. They remain underground in their burrows.",
+      "answer": "Hamsters in the wild remain underground during the day to avoid being caught by predators. They live in burrows, but the exact location is not specified in the provided context. However, it can be inferred that they live in areas with suitable underground habitats.",
       "faithfulness": 1.0,
-      "answer_relevancy": 1.0,
-      "context_recall": 0.0
+      "answer_relevancy": 0.5,
+      "context_recall": 0.5
     },
     {
       "question": "where was the first mardi gras in the us",
@@ -286,24 +286,24 @@
     },
     {
       "question": "what's the difference between a calico cat and a tortoiseshell cat",
-      "answer": "A calico cat is described as having largely white markings with tortoiseshell patches, whereas a tortoiseshell cat typically has relatively small or no white markings. This distinction is mentioned in the context of the United Kingdom and Canada/United States, where the terms are used to describe cats with these specific coat patterns.",
+      "answer": "Calico cats are typically described as having largely white coats with tortoiseshell patches, whereas tortoiseshell cats have relatively small or no white markings. This distinction is based on the color pattern, not the genetics.",
       "faithfulness": 0.5,
       "answer_relevancy": 1.0,
       "context_recall": 1.0
     },
     {
       "question": "where was 10 things i hate about u filmed",
-      "answer": "Much of the filming for 10 Things I Hate About You took place in the Seattle metropolitan area, with many scenes shot at Stadium High School in Tacoma.",
-      "faithfulness": 1.0,
+      "answer": "The film \"10 Things I Hate About You\" was filmed on location at Stadium High School and at a house in the Proctor District of Tacoma, Washington, and the prom sequence was shot over three days in Seattle. Much of the filming took place in the Seattle metropolitan area, with many scenes shot at Stadium High School in Tacoma.",
+      "faithfulness": 0.5,
       "answer_relevancy": 1.0,
-      "context_recall": 0.0
+      "context_recall": 0.5
     },
     {
       "question": "who plays the queen of thorns in game of thrones",
-      "answer": "Olenna Tyrell, also known as \"The Queen of Thorns\", is portrayed by Diana Rigg in the television adaptation of Game of Thrones.",
+      "answer": "Diana Rigg plays the role of Lady Olenna Tyrell, also known as the Queen of Thorns, in the HBO series Game of Thrones.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
-      "context_recall": 0.0
+      "context_recall": 1.0
     },
     {
       "question": "where was the movie just getting started filmed at",
@@ -314,45 +314,395 @@
     },
     {
       "question": "what is the name of the diamond shaped building in chicago",
-      "answer": "The building is popularly referred to as the Diamond Building.",
-      "faithfulness": 0.5,
+      "answer": "The building is popularly referred to as the Diamond Building or the Vagina Building.",
+      "faithfulness": 1.0,
       "answer_relevancy": 1.0,
       "context_recall": 0.5
     },
     {
       "question": "how many years can you be president in russia",
-      "answer": "The president of Russia is elected to a six-year term. The law prohibits anyone from ever being elected to the presidency for a third consecutive term. This implies that a president can serve for a total of 18 years (six years per term, with a maximum of three terms).",
+      "answer": "According to the context, the law in Russia prohibits anyone from ever being elected to the presidency for a third consecutive term. This implies that a president can serve for a total of 12 years (3 terms of 4 years each), but not consecutively for more than 12 years.",
       "faithfulness": 0.5,
       "answer_relevancy": 1.0,
-      "context_recall": 0.5
+      "context_recall": 0.0
     },
     {
       "question": "which street is the strip in las vegas",
       "answer": "The Las Vegas Strip is located on South Las Vegas Boulevard.",
       "faithfulness": 1.0,
       "answer_relevancy": 1.0,
-      "context_recall": 0.0
+      "context_recall": 0.5
     },
     {
       "question": "who is the music director of pirates of the caribbean",
-      "answer": "The music of the Pirates of the Caribbean film and its soundtrack is credited to composer Klaus Badelt and producer Hans Zimmer.",
-      "faithfulness": 1.0,
+      "answer": "The music of the Pirates of the Caribbean films is credited to composer Klaus Badelt and producer Hans Zimmer. They worked together on the film scores and soundtracks.",
+      "faithfulness": 0.0,
       "answer_relevancy": 0.5,
       "context_recall": 0.0
     },
     {
       "question": "are anglican and church of england the same",
-      "answer": "The Church of England is the state church of England and is also the mother church of the international Anglican Communion. This suggests that the Church of England and Anglican are closely related, but the context does not explicitly state that they are the same. However, it can be inferred that Anglican refers to the broader communion of churches that the Church of England is a part of.",
+      "answer": "The Church of England and Anglicanism are closely related, but the context does not explicitly state if they are exactly the same. However, it mentions that the Church of England is the mother church of the international Anglican Communion, suggesting a strong connection between the two.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.5,
+      "context_recall": 1.0
+    },
+    {
+      "question": "what type of snake is green and black",
+      "answer": "The type of snake that is green and black is the mamba. According to Chunk 1, there are three species of green mambas and one species of black mamba.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 0.5,
+      "context_recall": 0.5
+    },
+    {
+      "question": "how did triangular trade benefit european colonies in the americas",
+      "answer": "The triangular trade benefited European colonies in the Americas by providing them with goods such as cotton, sugar, tobacco, molasses, and rum, which were products of slave-labour plantations. New England also benefited from the trade by making rum from Caribbean sugar and molasses, which it shipped to Africa and within the New World. The trade also allowed European colonies to export goods such as tobacco and hemp from Virginia.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "when was the department of the navy established",
+      "answer": "The Department of the Navy was established by an Act of Congress on April 30, 1798. This was initiated by the recommendation of James McHenry.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "how many votes needed to confirm a supreme court justice",
+      "answer": "A simple majority vote is required to confirm or to reject a nominee. This means that 51 votes are needed to confirm a Supreme Court justice, as the Senate has 100 members.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "when was mtn mobile money launched in uganda",
+      "answer": "MTN Uganda introduced its mobile telephone-based banking product known as Mobile Money in 2009.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "where does the iron in your blood come from",
+      "answer": "The iron in the body comes from various sources, but the primary physiologic source of reserve iron is the liver's stores of ferritin. Most of the rest of the iron is contained in hemoglobin needed to carry oxygen through the blood and in ferritin complexes present in all cells, but most common in bone marrow, liver, and spleen.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.5,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who composed the pange lingua mass for the sistine chapel choir in about 1513",
+      "answer": "I don't have enough information in the provided context to answer this.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 0.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who sang the sunny side of the street",
+      "answer": "Several great jazz musicians played and recorded \"On the Sunny Side of the Street\", including Louis Armstrong, Dave Brubeck, Earl Hines, Benny Goodman, Lionel Hampton, Erroll Garner, Dizzy Gillespie, Art Tatum, James Booker, Count Basie, and Lester Young.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "when did the national anthem became our national anthem",
+      "answer": "I don't have enough information in the provided context to answer this.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 0.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who has the right to issue coins in india",
+      "answer": "The India Government Mint operates four mints in the country for the production of coins. It is implied that the India Government Mint is responsible for issuing coins in India.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "who plays tracey in birds of a feather",
+      "answer": "Linda Robson plays Tracey Stubbs in Birds of a Feather.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who played the emperor in the return of the jedi",
+      "answer": "Ian McDiarmid played the role of Emperor Palpatine in Return of the Jedi.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "when was the microscope invented and by whom",
+      "answer": "The earliest known use of simple microscopes dates back to the widespread use of lenses in eyeglasses in the 13th century. The inventor of the compound microscope is unknown, but several claims have been made over the years, including by Zacharias Janssen, Hans Lippershey, and Cornelis Drebbel.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "when did the norfolk broads become a national park",
+      "answer": "In January 2015, the Broads Authority approved a change in name of the area to the Broads National Park.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "who is regarded as the finest stringed instrument builder of all time",
+      "answer": "Antonio Stradivari is generally considered the most significant and greatest artisan in the field of crafting string instruments. He is often referred to as the finest stringed instrument builder of all time.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "where did the dukes of hazzard take place",
+      "answer": "The Dukes of Hazzard took place in Hazzard County, Georgia. The show's production initially filmed in Covington and Conyers, Georgia, and surrounding areas, including some location work in nearby Atlanta.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who replaced clarence in the e street band",
+      "answer": "Jake Clemons replaced his uncle, Clarence Clemons, in the E Street Band after Clarence's death in 2011.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "when was the safety car introduced in f1",
+      "answer": "The safety car was first used in Formula One at the 1973 Canadian Grand Prix.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who sang killing me softly with his song first",
+      "answer": "Lori Lieberman recorded the song in late 1971.",
       "faithfulness": 1.0,
       "answer_relevancy": 0.5,
       "context_recall": 0.5
     },
     {
-      "question": "what type of snake is green and black",
-      "answer": "The green mamba is mentioned as one of the species of mambas, but the specific coloration of green and black is not mentioned in the context. However, the black mamba is mentioned as a species of mamba that is largely terrestrial.",
+      "question": "when does the 18th century start and end",
+      "answer": "The 18th century started on January 1, 1701 and ended on December 31, 1800.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who is the only son of hori and dhaniya in godan",
+      "answer": "Gobar is the son of Hori and Dhania in Godan.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "how did jim propose to pam on the office",
+      "answer": "Jim proposed to Pam in the pouring rain at a rest stop, saying that he \"can't wait\".",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "where did yellowstone national park get its name",
+      "answer": "Yellowstone National Park got its name from the Yellowstone River, which was named by French trappers as \"Roche Jaune\", possibly a translation of the Hidatsa name Mi tsi a-da-zi (\"Yellow Rock River\").",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who made up the second coalition in 1798",
+      "answer": "The second coalition in 1798 was made up of Britain, Austria, Russia, the Ottoman Empire, Portugal, Naples, various German monarchies, and Sweden. Their goal was to contain the expansion of the French Republic and to restore the monarchy in France.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "what is the name of ramaiya vastavaiya heroine",
+      "answer": "The heroine of Ramaiya Vastavaiya is Sona, played by Shruti Haasan.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who does cartman's voice on south park",
+      "answer": "Trey Parker voices Cartman. \nHe is one of the main characters that Trey Parker voices.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "what is the bullys name on the simpsons",
+      "answer": "The bully's name on The Simpsons is Nelson Muntz.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "where's the old man in pawn stars",
+      "answer": "The Old Man, also known as Richard Benjamin Harrison, was the co-owner of the World Famous Gold & Silver Pawn Shop, as featured on the History Channel series Pawn Stars. He co-owned the store with his son Rick Harrison.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "who initiated the game of cricket among india and how",
+      "answer": "Cricket was introduced to India by European merchant sailors in the 18th century. The East India Company was the means by which cricket was introduced into India. [",
       "faithfulness": 1.0,
       "answer_relevancy": 0.5,
+      "context_recall": 0.0
+    },
+    {
+      "question": "where do trans fats go in the body",
+      "answer": "I don't have enough information in the provided context to answer this.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
       "context_recall": 0.5
+    },
+    {
+      "question": "when was the last time chicago bears went to the superbowl",
+      "answer": "The Chicago Bears last went to the Super Bowl in Super Bowl XLI, which was played on February 4, 2007. They lost to the Indianapolis Colts by a score of 29–17.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "where did japan get its first writing system from",
+      "answer": "Japan's writing system is a combination of logographic kanji, which are adopted Chinese characters, and syllabic kana. This suggests that Japan's writing system originated from China, where kanji characters were developed.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "who holds the record for most lightning strikes",
+      "answer": "Roy Sullivan holds the record for being struck by lightning more recorded times than any other human being, with 7 strikes. He is recognized by Guinness World Records for this achievement.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who plays bonnie's voice on family guy",
+      "answer": "Jennifer Tilly plays Bonnie Swanson on Family Guy.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "what is the total number of fundamental duties mentioned in the constitution of india",
+      "answer": "Originally ten in number, the Fundamental Duties were increased to eleven by the 86th Amendment in 2002.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who was the lady in sons of anarchy",
+      "answer": "The lady in Sons of Anarchy is Gemma Teller Morrow, played by Katey Sagal. She is the widow of John Teller, wife of Clay Morrow, and mother of Jax Teller.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "what is antony and cleopatra the play about",
+      "answer": "The play \"Antony and Cleopatra\" is based on Thomas North's translation of Plutarch's Lives and follows the relationship between Cleopatra and Mark Antony from the time of the Sicilian revolt to Cleopatra's suicide during the Final War of the Roman Republic. The play is characterized by swift shifts in geographical location and linguistic register as it alternates between sensual, imaginative Alexandria and a more pragmatic, austere Rome.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "when does elena's memories of damon come back",
+      "answer": "Elena's memories of Damon come back when she crosses the borders, the last place where she and Damon were together. This happens in Chunk 4.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 0.5,
+      "context_recall": 0.5
+    },
+    {
+      "question": "when was the stratosphere hotel built in las vegas",
+      "answer": "The Stratosphere hotel opened on April 30, 1996. However, construction on the second tower stopped shortly after due to bankruptcy, with only a few stories partially built.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "during which season of x factor us were fifth harmony formed",
+      "answer": "Fifth Harmony was formed during the U.S. season 2 of The X Factor. They were put together after a discussion from all four judges, and thus qualified them for the Groups category.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who sang put the lime in the coconut and shake it all up",
+      "answer": "The song \"Coconut\" was written and first recorded by American singer-songwriter Harry Nilsson. It was released as the third single from his 1971 album, Nilsson Schmilsson.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.5,
+      "context_recall": 0.0
+    },
+    {
+      "question": "which river in africa is the water source for the victoria falls",
+      "answer": "The Zambezi River is the water source for the Victoria Falls.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who should be called the father of radio",
+      "answer": "Lee de Forest is referred to as the \"Father of Radio\" in the provided context. He is also mentioned to have boasted that he made, then lost, four fortunes and was involved in several major patent lawsuits.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who plays lucas in days of our lives",
+      "answer": "Bryan Dattilo plays Lucas Horton on the NBC daytime soap opera Days of Our Lives.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who did the chiefs trade alex snith for",
+      "answer": "The Chiefs traded Alex Smith to the Washington Redskins in exchange for a 3rd round pick in the 2018 NFL Draft, along with cornerback Kendall Fuller.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "when was the wolf of wall street filmed",
+      "answer": "Filming for The Wolf of Wall Street began on August 8, 2012, in New York, and Jonah Hill announced that his first day of shooting was September 4, 2012. Additional scenes were shot in January 2013 at a set built in an abandoned office building in Ardsley, New York.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "where do purple martins go in the winter time",
+      "answer": "Purple martins migrate to South America for the winter.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "who wrote the south carolina declaration of secession",
+      "answer": "The primary author of the Declaration of the Immediate Causes Which Induce and Justify the Secession of South Carolina from the Federal Union was Christopher G. Memminger.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "where is the femur located on the body",
+      "answer": "The femur is located in the hindlimbs of vertebrates with four legs, such as dogs and horses. It is also the most proximal (closest to the hip joint) bone of the leg in tetrapod vertebrates capable of walking or jumping.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "where will the ryder cup be held this year",
+      "answer": "I don't have enough information in the provided context to answer this.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who has the most hat tricks in cricket",
+      "answer": "Lasith Malinga of Sri Lanka is the only bowler to have taken three career hat-tricks.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 0.0
     }
   ]
 }
