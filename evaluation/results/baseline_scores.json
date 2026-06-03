@@ -1,0 +1,358 @@
+{
+  "faithfulness": 0.87,
+  "answer_relevancy": 0.77,
+  "context_recall": 0.46,
+  "num_questions": 50,
+  "individual": [
+    {
+      "question": "when did richmond last play in a preliminary final",
+      "answer": "Richmond last played in a preliminary final in 2001. \nThey defeated Greater Western Sydney by 36 points in the 2017 preliminary final to progress to the Grand Final. \nThis was their first preliminary final appearance since 2001.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who sang what in the world's come over you",
+      "answer": "Jack Scott sang \"What in the World's Come Over You\". \nIt was his second gold disc winner and reached #5 on the Billboard Hot 100 chart.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who produces the most wool in the world",
+      "answer": "China is mentioned as having eclipsed Australia in terms of total weight of wool production. However, the exact ranking of the top wool-producing countries is not explicitly stated in the provided context.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 0.5,
+      "context_recall": 0.5
+    },
+    {
+      "question": "where does alaska the last frontier take place",
+      "answer": "The show \"Alaska: The Last Frontier\" takes place at the Kilcher family's homestead, which is located 11 miles outside of Homer, Alaska.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "a day to remember all i want cameos",
+      "answer": "The music video for A Day to Remember's song \"All I Want\" features cameos of numerous popular bands and musicians, including Tom Denney, Pete Wentz, Winston McCall of Parkway Drive, and many others. The cameos are listed in the context as part of the music video's release. The video received positive reviews, with Rock Sound calling it \"quite excellent\".",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "what does the red stripes mean on the american flag",
+      "answer": "The 13 stripes on the American flag represent the thirteen British colonies that declared independence from the Kingdom of Great Britain, and became the first states in the U.S.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "where did they film diary of a wimpy kid",
+      "answer": "The filming of Diary of a Wimpy Kid took place in Vancouver and wrapped up on October 16, 2009.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "where was beasts of the southern wild filmed",
+      "answer": "The film \"Beasts of the Southern Wild\" was filmed in Terrebonne Parish town Montegut. It was also inspired by the rapidly eroding Isle de Jean Charles in Louisiana's Terrebonne Parish.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "what part of the country are you likely to find the majority of the mollisols",
+      "answer": "You are likely to find the majority of the Mollisols in the North American Great Plains.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "when did fosters home for imaginary friends start",
+      "answer": "Foster's Home for Imaginary Friends first premiered on Cartoon Network on August 13, 2004, as a 90-minute television film. It began its normal run of twenty-to-thirty-minute episodes on Fridays, at 7 pm, on August 20, 2004.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "when did us get involved in vietnam war",
+      "answer": "The United States involvement in the Vietnam War began after World War II and escalated into full commitment during the Vietnam War from 1955 to 1975.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.5,
+      "context_recall": 1.0
+    },
+    {
+      "question": "how are the american declaration of independence and french declaration of the rights of man similar",
+      "answer": "The American Declaration of Independence and the French Declaration of the Rights of Man are similar in that they were both heavily influenced by the political philosophy of the Enlightenment. They also share principles of human rights, as mentioned in the French Declaration of the Rights of Man and of the Citizen. This is evident from the fact that the French declaration was influenced by the U.S. Declaration of Independence, which preceded it.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "what territory was fought over by india and pakistan",
+      "answer": "The Kashmir conflict is a territorial conflict primarily between India and Pakistan.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "when did 17 nam summit meet take place",
+      "answer": "I don't have enough information in the provided context to answer this.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "when did jack and the beanstalk take place",
+      "answer": "According to researchers at the universities in Durham and Lisbon, the story of Jack and the Beanstalk originated more than 5,000 years ago. This is based on a widespread archaic story form classified by folklorists as ATU 328 The Boy Who Stole Ogre's Treasure.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.5,
+      "context_recall": 1.0
+    },
+    {
+      "question": "what is the meaning of mbbs and md",
+      "answer": "The degrees of MBBS (Bachelor of Medicine and Bachelor of Surgery) and MD (Doctor of Medicine) are mentioned in the context. MBBS is conferred to graduates as a degree, while MD is reserved for research training degree or honorary doctorates.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "character sketch of hamlet in the play hamlet",
+      "answer": "Prince Hamlet is the title character and protagonist of William Shakespeare's tragedy Hamlet. He is the Prince of Denmark, nephew to the usurping Claudius, and son of King Hamlet. At the beginning of the play, he struggles with whether, and how, to avenge the murder of his father, and struggles with his own sanity along the way.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "who made the song my achy breaky heart",
+      "answer": "The song \"Achy Breaky Heart\" was written by Don Von Tress. It was originally titled \"Don't Tell My Heart\" and performed by The Marcy Brothers in 1991, but later performed by Billy Ray Cyrus on his 1992 album Some Gave All.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "when do the assassination of gianni versace come on",
+      "answer": "The season \"The Assassination of Gianni Versace: American Crime Story\" premiered on January 17, 2018.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "where was the movie paint your wagon filmed",
+      "answer": "The movie Paint Your Wagon was filmed near Baker City, Oregon, with other locations including Big Bear Lake, California, and San Bernardino National Forest. The interiors were filmed at Paramount Studios.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who sang go rest high on the mountain",
+      "answer": "Vince Gill sang \"Go Rest High on That Mountain\". He also wrote the song.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "when did the movie cooley high come out",
+      "answer": "The movie Cooley High was released in 1975.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "i did two tours of duty in vietnam song",
+      "answer": "The opening theme song of the TV series \"Tour of Duty\" was an abbreviated version of The Rolling Stones hit \"Paint It, Black\". However, the context does not mention a song specifically titled \"i did two tours of duty in vietnam\".",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "where is may i come in madam serial",
+      "answer": "The \"May I Come In Madam?\" serial premiered on 7 March 2016 on Life OK and aired Monday to Friday.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who plays sonny's father in general hospital",
+      "answer": "The actor who plays Sonny's father, Mike Corbin, in General Hospital is Ron Hale.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "when was the first heart transplant performed in the world",
+      "answer": "The first human-to-human heart transplant was performed by Christiaan Barnard on December 3, 1967. However, it's also mentioned that James Hardy did a xenotransplant in 1964, which was the second overall heart transplant.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who does the voice of arby's commercial",
+      "answer": "Ving Rhames does the voice of Arby's commercial with the catchline 'Arby's, we have the meats!'",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "when did the us military start using hummers",
+      "answer": "I don't have enough information in the provided context to answer this.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "what time do they stop selling alcohol in south carolina",
+      "answer": "In South Carolina, the retail sale of liquor statewide is permitted from 9 a.m. until 7 p.m. Monday–Saturday. Sunday sales are banned by state law, but counties and cities may hold referendums to allow Sunday sales of beer and wine only.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.5,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who is known as a father of indian cricket",
+      "answer": "Buchi Babu Naidu is known as the 'Father of South Indian Cricket'.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "what year did they stop making impala ss",
+      "answer": "The Impala SS was available until 1969, and then there would be no Impala SS for 1970. However, the Impala SS was reintroduced in 1994.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "amusement park on north carolina south carolina border",
+      "answer": "Carowinds is an amusement park located on the border between North and South Carolina. It is situated adjacent to Interstate 77 in Charlotte and Fort Mill, respectively. The park opened on March 31, 1973.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "does kirby vacuum still sell door to door",
+      "answer": "Yes, according to the context, Kirby's products are still sold via in-home door-to-door demonstrations. This is mentioned in Chunk 1.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who does the voice of madame gazelle in peppa pig",
+      "answer": "Morwenna Banks is known for her roles as Mummy Pig, Madame Gazelle, and Dr Hamster in the children's series Peppa Pig.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who won the battle of picacho pass in arizona",
+      "answer": "The Confederates initially had the upper hand, as they were able to fire on the Union cavalry and cause several casualties. However, three of the Confederates surrendered, and the Union cavalry was able to secure one prisoner. Despite this, the Union cavalry ultimately broke off the fight and retreated, allowing the Confederates to escape and carry a warning to Tucson. So, it can be said that the Confederates won the battle in the sense that they were able to escape and achieve their objective, but the Union cavalry was able to secure a prisoner and inflict some casualties.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "who gave the motto back to the vedas",
+      "answer": "Dayananda Saraswati gave the \"back to the Vedas\" message.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "when does wally west becomes a speedster in the flash",
+      "answer": "I don't have enough information in the provided context to answer this.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 0.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "book that led to the meat inspection act",
+      "answer": "The book that led to the Meat Inspection Act is \"The Jungle\" by Upton Sinclair.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "where does a hamster live in the wild",
+      "answer": "Hamsters live in the wild underground during the day to avoid being caught by predators. They remain underground in their burrows.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "where was the first mardi gras in the us",
+      "answer": "The first Mardi Gras in the US was held by French settlers in Mobile, Alabama in 1703.",
+      "faithfulness": 0.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "what's the difference between a calico cat and a tortoiseshell cat",
+      "answer": "A calico cat is described as having largely white markings with tortoiseshell patches, whereas a tortoiseshell cat typically has relatively small or no white markings. This distinction is mentioned in the context of the United Kingdom and Canada/United States, where the terms are used to describe cats with these specific coat patterns.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 1.0
+    },
+    {
+      "question": "where was 10 things i hate about u filmed",
+      "answer": "Much of the filming for 10 Things I Hate About You took place in the Seattle metropolitan area, with many scenes shot at Stadium High School in Tacoma.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who plays the queen of thorns in game of thrones",
+      "answer": "Olenna Tyrell, also known as \"The Queen of Thorns\", is portrayed by Diana Rigg in the television adaptation of Game of Thrones.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "where was the movie just getting started filmed at",
+      "answer": "The movie \"Just Getting Started\" was filmed in New Mexico, starting on August 15, 2016.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "what is the name of the diamond shaped building in chicago",
+      "answer": "The building is popularly referred to as the Diamond Building.",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "how many years can you be president in russia",
+      "answer": "The president of Russia is elected to a six-year term. The law prohibits anyone from ever being elected to the presidency for a third consecutive term. This implies that a president can serve for a total of 18 years (six years per term, with a maximum of three terms).",
+      "faithfulness": 0.5,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.5
+    },
+    {
+      "question": "which street is the strip in las vegas",
+      "answer": "The Las Vegas Strip is located on South Las Vegas Boulevard.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_recall": 0.0
+    },
+    {
+      "question": "who is the music director of pirates of the caribbean",
+      "answer": "The music of the Pirates of the Caribbean film and its soundtrack is credited to composer Klaus Badelt and producer Hans Zimmer.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.5,
+      "context_recall": 0.0
+    },
+    {
+      "question": "are anglican and church of england the same",
+      "answer": "The Church of England is the state church of England and is also the mother church of the international Anglican Communion. This suggests that the Church of England and Anglican are closely related, but the context does not explicitly state that they are the same. However, it can be inferred that Anglican refers to the broader communion of churches that the Church of England is a part of.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.5,
+      "context_recall": 0.5
+    },
+    {
+      "question": "what type of snake is green and black",
+      "answer": "The green mamba is mentioned as one of the species of mambas, but the specific coloration of green and black is not mentioned in the context. However, the black mamba is mentioned as a species of mamba that is largely terrestrial.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.5,
+      "context_recall": 0.5
+    }
+  ]
+}

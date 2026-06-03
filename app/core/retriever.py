@@ -114,3 +114,9 @@ class Retriever:
 
     def count(self) -> int:
         return self.collection.count()
+    
+
+'''__init__ — runs when you create Retriever(). Loads the embedding model and opens the database. Like hiring a librarian and opening the library doors.
+_chunk_text — takes one long document and cuts it into 256-word pieces with 32-word overlaps. Why overlap? So a sentence that falls at the boundary of two chunks still appears fully in one of them. Like cutting a book into pages but letting each page share 2 lines with the next.
+index_documents — the setup step. Takes all documents → chunks them → converts to embeddings → stores in ChromaDB. Run once before the project can answer anything.
+retrieve — the live search. Takes a question → converts to embedding → asks ChromaDB "what chunks are closest to this?" → returns top 5 with relevance scores.'''

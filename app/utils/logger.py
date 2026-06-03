@@ -1,3 +1,4 @@
+#Every query you ever run gets saved to this file,  you can load this file with pandas and find your 20 worst queries, those become the failure analysis examples in your research paper.
 import json
 import logging
 import sys

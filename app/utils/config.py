@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
-class Config:
+class Config: #groups all settings in one place. Every other file imports config from here instead of reading .env themselves.
     GROQ_API_KEY: str    = os.getenv("GROQ_API_KEY", "")
     LLM_MODEL: str       = os.getenv("LLM_MODEL", "llama-3.1-8b-instant")
     EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")

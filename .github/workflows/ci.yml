@@ -1,3 +1,4 @@
+#Every time you push code to GitHub, this file automatically runs your tests on GitHub's servers. If tests pass you get a green checkmark. If they fail you get a red cross and an email.  proof to every interviewer that your code actually works.
 name: CI
 
 on:
