@@ -1,0 +1,493 @@
+{
+  "num_failure_cases": 36,
+  "threshold_results": {
+    "2.5": {
+      "correctly_flagged": 2,
+      "total": 36,
+      "accuracy": 0.0556
+    },
+    "3.0": {
+      "correctly_flagged": 14,
+      "total": 36,
+      "accuracy": 0.3889
+    },
+    "3.5": {
+      "correctly_flagged": 25,
+      "total": 36,
+      "accuracy": 0.6944
+    }
+  },
+  "best_threshold": 3.5,
+  "avg_tokens_per_query": 1276.4,
+  "tokens_per_100_queries": 127644.4,
+  "scored_cases": [
+    {
+      "question": "who sang what in the world's come over you",
+      "context_recall": 0.0,
+      "scorer_mean": 3.0,
+      "scorer_scores": [
+        5,
+        2,
+        3,
+        3,
+        2
+      ],
+      "token_count": 1351
+    },
+    {
+      "question": "where does alaska the last frontier take place",
+      "context_recall": 0.0,
+      "scorer_mean": 4.2,
+      "scorer_scores": [
+        5,
+        5,
+        4,
+        4,
+        3
+      ],
+      "token_count": 1309
+    },
+    {
+      "question": "what does the red stripes mean on the american flag",
+      "context_recall": 0.0,
+      "scorer_mean": 5.0,
+      "scorer_scores": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "token_count": 1300
+    },
+    {
+      "question": "what part of the country are you likely to find the majority of the mollisols",
+      "context_recall": 0.0,
+      "scorer_mean": 2.6,
+      "scorer_scores": [
+        4,
+        3,
+        2,
+        2,
+        2
+      ],
+      "token_count": 1340
+    },
+    {
+      "question": "when did fosters home for imaginary friends start",
+      "context_recall": 0.0,
+      "scorer_mean": 2.8,
+      "scorer_scores": [
+        5,
+        2,
+        2,
+        3,
+        2
+      ],
+      "token_count": 1282
+    },
+    {
+      "question": "when did 17 nam summit meet take place",
+      "context_recall": 0.0,
+      "scorer_mean": 2.6,
+      "scorer_scores": [
+        4,
+        3,
+        2,
+        2,
+        2
+      ],
+      "token_count": 1321
+    },
+    {
+      "question": "what is the meaning of mbbs and md",
+      "context_recall": 0.0,
+      "scorer_mean": 2.2,
+      "scorer_scores": [
+        4,
+        2,
+        2,
+        1,
+        2
+      ],
+      "token_count": 1181
+    },
+    {
+      "question": "when do the assassination of gianni versace come on",
+      "context_recall": 0.0,
+      "scorer_mean": 2.6,
+      "scorer_scores": [
+        5,
+        2,
+        2,
+        2,
+        2
+      ],
+      "token_count": 1203
+    },
+    {
+      "question": "who sang go rest high on the mountain",
+      "context_recall": 0.0,
+      "scorer_mean": 2.8,
+      "scorer_scores": [
+        5,
+        2,
+        2,
+        2,
+        3
+      ],
+      "token_count": 1290
+    },
+    {
+      "question": "i did two tours of duty in vietnam song",
+      "context_recall": 0.0,
+      "scorer_mean": 3.0,
+      "scorer_scores": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "token_count": 1165
+    },
+    {
+      "question": "who is known as a father of indian cricket",
+      "context_recall": 0.0,
+      "scorer_mean": 3.0,
+      "scorer_scores": [
+        3,
+        2,
+        5,
+        2,
+        3
+      ],
+      "token_count": 1386
+    },
+    {
+      "question": "amusement park on north carolina south carolina border",
+      "context_recall": 0.0,
+      "scorer_mean": 2.6,
+      "scorer_scores": [
+        5,
+        2,
+        2,
+        2,
+        2
+      ],
+      "token_count": 1257
+    },
+    {
+      "question": "does kirby vacuum still sell door to door",
+      "context_recall": 0.0,
+      "scorer_mean": 2.4,
+      "scorer_scores": [
+        5,
+        2,
+        2,
+        1,
+        2
+      ],
+      "token_count": 1295
+    },
+    {
+      "question": "book that led to the meat inspection act",
+      "context_recall": 0.0,
+      "scorer_mean": 3.6,
+      "scorer_scores": [
+        5,
+        4,
+        2,
+        2,
+        5
+      ],
+      "token_count": 1255
+    },
+    {
+      "question": "where was the first mardi gras in the us",
+      "context_recall": 0.0,
+      "scorer_mean": 3.0,
+      "scorer_scores": [
+        2,
+        5,
+        4,
+        2,
+        2
+      ],
+      "token_count": 1283
+    },
+    {
+      "question": "where was the movie just getting started filmed at",
+      "context_recall": 0.0,
+      "scorer_mean": 4.2,
+      "scorer_scores": [
+        4,
+        4,
+        4,
+        4,
+        5
+      ],
+      "token_count": 1107
+    },
+    {
+      "question": "how many years can you be president in russia",
+      "context_recall": 0.0,
+      "scorer_mean": 2.6,
+      "scorer_scores": [
+        5,
+        2,
+        2,
+        2,
+        2
+      ],
+      "token_count": 1219
+    },
+    {
+      "question": "who is the music director of pirates of the caribbean",
+      "context_recall": 0.0,
+      "scorer_mean": 3.0,
+      "scorer_scores": [
+        3,
+        3,
+        2,
+        4,
+        3
+      ],
+      "token_count": 1245
+    },
+    {
+      "question": "when was mtn mobile money launched in uganda",
+      "context_recall": 0.0,
+      "scorer_mean": 2.6,
+      "scorer_scores": [
+        5,
+        2,
+        2,
+        2,
+        2
+      ],
+      "token_count": 1228
+    },
+    {
+      "question": "where does the iron in your blood come from",
+      "context_recall": 0.0,
+      "scorer_mean": 3.8,
+      "scorer_scores": [
+        4,
+        4,
+        3,
+        4,
+        4
+      ],
+      "token_count": 1434
+    },
+    {
+      "question": "who sang the sunny side of the street",
+      "context_recall": 0.0,
+      "scorer_mean": 2.6,
+      "scorer_scores": [
+        5,
+        2,
+        2,
+        2,
+        2
+      ],
+      "token_count": 1218
+    },
+    {
+      "question": "when did the national anthem became our national anthem",
+      "context_recall": 0.0,
+      "scorer_mean": 4.6,
+      "scorer_scores": [
+        4,
+        4,
+        5,
+        5,
+        5
+      ],
+      "token_count": 1221
+    },
+    {
+      "question": "who played the emperor in the return of the jedi",
+      "context_recall": 0.0,
+      "scorer_mean": 5.0,
+      "scorer_scores": [
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "token_count": 1321
+    },
+    {
+      "question": "who is regarded as the finest stringed instrument builder of all time",
+      "context_recall": 0.0,
+      "scorer_mean": 3.0,
+      "scorer_scores": [
+        4,
+        5,
+        2,
+        2,
+        2
+      ],
+      "token_count": 1351
+    },
+    {
+      "question": "where did the dukes of hazzard take place",
+      "context_recall": 0.0,
+      "scorer_mean": 3.8,
+      "scorer_scores": [
+        4,
+        3,
+        4,
+        4,
+        4
+      ],
+      "token_count": 1255
+    },
+    {
+      "question": "when does the 18th century start and end",
+      "context_recall": 0.0,
+      "scorer_mean": 3.2,
+      "scorer_scores": [
+        5,
+        1,
+        4,
+        3,
+        3
+      ],
+      "token_count": 1339
+    },
+    {
+      "question": "where did yellowstone national park get its name",
+      "context_recall": 0.0,
+      "scorer_mean": 2.6,
+      "scorer_scores": [
+        5,
+        2,
+        2,
+        2,
+        2
+      ],
+      "token_count": 1321
+    },
+    {
+      "question": "who made up the second coalition in 1798",
+      "context_recall": 0.0,
+      "scorer_mean": 2.8,
+      "scorer_scores": [
+        4,
+        4,
+        2,
+        2,
+        2
+      ],
+      "token_count": 1220
+    },
+    {
+      "question": "who initiated the game of cricket among india and how",
+      "context_recall": 0.0,
+      "scorer_mean": 3.0,
+      "scorer_scores": [
+        2,
+        4,
+        4,
+        2,
+        3
+      ],
+      "token_count": 1269
+    },
+    {
+      "question": "when was the last time chicago bears went to the superbowl",
+      "context_recall": 0.0,
+      "scorer_mean": 4.2,
+      "scorer_scores": [
+        5,
+        3,
+        5,
+        5,
+        3
+      ],
+      "token_count": 1294
+    },
+    {
+      "question": "who holds the record for most lightning strikes",
+      "context_recall": 0.0,
+      "scorer_mean": 3.4,
+      "scorer_scores": [
+        5,
+        5,
+        3,
+        2,
+        2
+      ],
+      "token_count": 1158
+    },
+    {
+      "question": "who was the lady in sons of anarchy",
+      "context_recall": 0.0,
+      "scorer_mean": 4.6,
+      "scorer_scores": [
+        5,
+        5,
+        4,
+        4,
+        5
+      ],
+      "token_count": 1231
+    },
+    {
+      "question": "during which season of x factor us were fifth harmony formed",
+      "context_recall": 0.0,
+      "scorer_mean": 3.2,
+      "scorer_scores": [
+        5,
+        2,
+        4,
+        2,
+        3
+      ],
+      "token_count": 1375
+    },
+    {
+      "question": "who sang put the lime in the coconut and shake it all up",
+      "context_recall": 0.0,
+      "scorer_mean": 2.8,
+      "scorer_scores": [
+        5,
+        2,
+        3,
+        2,
+        2
+      ],
+      "token_count": 1383
+    },
+    {
+      "question": "who should be called the father of radio",
+      "context_recall": 0.0,
+      "scorer_mean": 3.0,
+      "scorer_scores": [
+        3,
+        2,
+        5,
+        3,
+        2
+      ],
+      "token_count": 1208
+    },
+    {
+      "question": "who has the most hat tricks in cricket",
+      "context_recall": 0.0,
+      "scorer_mean": 4.2,
+      "scorer_scores": [
+        5,
+        4,
+        4,
+        4,
+        4
+      ],
+      "token_count": 1337
+    }
+  ]
+}

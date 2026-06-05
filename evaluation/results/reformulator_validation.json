@@ -1,0 +1,769 @@
+{
+  "total_failures": 36,
+  "fixed": 15,
+  "improved_any": 12,
+  "gave_up": 0,
+  "avg_original_score": 3.272,
+  "avg_best_score": 3.411,
+  "score_improvement": 0.139,
+  "good_threshold": 3.5,
+  "insufficient_threshold": 2.5,
+  "individual_results": [
+    {
+      "question": "who sang what in the world's come over you",
+      "original_score": 3.0,
+      "best_score": 3.0,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "Who are the artists featured in the song 'World's Apart'?",
+          "score": 2.6
+        },
+        {
+          "rewrite": "What is the song 'World's Come Over Me' by?",
+          "score": 2.6
+        },
+        {
+          "rewrite": "Who has covered 'World's Come Over Me'?",
+          "score": 2.4
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "where does alaska the last frontier take place",
+      "original_score": 4.2,
+      "best_score": 4.2,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What is the setting or location of the reality TV show Alaska: The Last Frontier?",
+          "score": 4.2
+        },
+        {
+          "rewrite": "Where is the show Alaska: The Last Frontier primarily filmed?",
+          "score": 3.0
+        },
+        {
+          "rewrite": "What are the geographic coordinates of the location featured in the TV show Alaska: The Last Frontier?",
+          "score": 3.6
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "what does the red stripes mean on the american flag",
+      "original_score": 5.0,
+      "best_score": 5.0,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What do the colors of the American flag represent in general?",
+          "score": 4.0
+        },
+        {
+          "rewrite": "What is the significance of stripes on the United States flag?",
+          "score": 4.0
+        },
+        {
+          "rewrite": "What do the red stripes on the American flag symbolize in terms of its history?",
+          "score": 4.0
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "what part of the country are you likely to find the majority of the mollisols",
+      "original_score": 2.6,
+      "best_score": 2.6,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What regions of the United States have the most widespread occurrence of mollisols",
+          "score": 2.2
+        },
+        {
+          "rewrite": "Where are the majority of mollisols found in North America",
+          "score": 2.4
+        },
+        {
+          "rewrite": "What areas in the Great Plains region have the highest concentration of mollisols",
+          "score": 2.2
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "when did fosters home for imaginary friends start",
+      "original_score": 2.8,
+      "best_score": 2.8,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What is the premiere date of Fosters Home for Imaginary Friends",
+          "score": 2.8
+        },
+        {
+          "rewrite": "When was Fosters Home for Imaginary Friends first aired",
+          "score": 2.6
+        },
+        {
+          "rewrite": "When did the Cartoon Network show Fosters Home for Imaginary Friends debut",
+          "score": 2.6
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "when did 17 nam summit meet take place",
+      "original_score": 2.6,
+      "best_score": 2.8,
+      "best_rewrite": "When did the 17th Non-Aligned Movement Summit occur",
+      "rewrite_scores": [
+        {
+          "rewrite": "What dates did the 17th NAM Summit take place",
+          "score": 2.4
+        },
+        {
+          "rewrite": "When did the 17th Non-Aligned Movement Summit occur",
+          "score": 2.8
+        },
+        {
+          "rewrite": "On what dates did the 17th Summit of the Non-Aligned Movement happen",
+          "score": 2.4
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "what is the meaning of mbbs and md",
+      "original_score": 2.2,
+      "best_score": 2.8,
+      "best_rewrite": "What do the abbreviations MBBS and MD stand for in the context of medical degrees?",
+      "rewrite_scores": [
+        {
+          "rewrite": "What are the differences between MBBS and MD in medical education?",
+          "score": 2.6
+        },
+        {
+          "rewrite": "What do the abbreviations MBBS and MD stand for in the context of medical degrees?",
+          "score": 2.8
+        },
+        {
+          "rewrite": "How do MBBS and MD degrees compare in terms of curriculum and recognition worldwide?",
+          "score": 2.2
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "when do the assassination of gianni versace come on",
+      "original_score": 2.6,
+      "best_score": 2.6,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What are the dates and times for the Gianni Versace documentary or film",
+          "score": 2.6
+        },
+        {
+          "rewrite": "When is the documentary about Gianni Versace's life and death",
+          "score": 2.4
+        },
+        {
+          "rewrite": "What is the airdate for American Crime Story: The Assassination of Gianni Versace",
+          "score": 2.6
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "who sang go rest high on the mountain",
+      "original_score": 2.8,
+      "best_score": 2.8,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "Who sang the song Go Rest High on the Mountain?",
+          "score": 2.4
+        },
+        {
+          "rewrite": "What is the artist behind the song Go Rest High on the Mountain?",
+          "score": 2.6
+        },
+        {
+          "rewrite": "Who performed the popular Christian song Go Rest High on the Mountain?",
+          "score": 2.4
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "i did two tours of duty in vietnam song",
+      "original_score": 3.0,
+      "best_score": 3.0,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "vietnam war songs with tour of duty experience",
+          "score": 2.8
+        },
+        {
+          "rewrite": "songs about vietnam veterans",
+          "score": 2.4
+        },
+        {
+          "rewrite": "lyrics of vietnam war songs that mention tours of duty",
+          "score": 2.4
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "who is known as a father of indian cricket",
+      "original_score": 3.0,
+      "best_score": 3.6,
+      "best_rewrite": "who is regarded as a pioneer of indian cricket",
+      "rewrite_scores": [
+        {
+          "rewrite": "who is regarded as a pioneer of indian cricket",
+          "score": 3.6
+        },
+        {
+          "rewrite": "what is the name of the person often called the founder of indian cricket",
+          "score": 3.6
+        },
+        {
+          "rewrite": "who is credited with being the father figure of indian cricket",
+          "score": 3.0
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "amusement park on north carolina south carolina border",
+      "original_score": 2.6,
+      "best_score": 2.6,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "amusement parks near North Carolina South Carolina border",
+          "score": 2.6
+        },
+        {
+          "rewrite": "amusement parks in North Carolina and South Carolina",
+          "score": 2.6
+        },
+        {
+          "rewrite": "theme parks along the North Carolina South Carolina border",
+          "score": 2.6
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "does kirby vacuum still sell door to door",
+      "original_score": 2.6,
+      "best_score": 2.6,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "Do Kirby vacuums still sell door-to-door sales?",
+          "score": 2.6
+        },
+        {
+          "rewrite": "Are Kirby vacuum sales still conducted through in-home demonstrations?",
+          "score": 2.4
+        },
+        {
+          "rewrite": "Does Kirby offer direct sales to consumers at their homes?",
+          "score": 2.6
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "book that led to the meat inspection act",
+      "original_score": 3.6,
+      "best_score": 3.6,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "books that led to the passage of the Meat Inspection Act",
+          "score": 2.6
+        },
+        {
+          "rewrite": "books about the history of food safety legislation",
+          "score": 3.4
+        },
+        {
+          "rewrite": "what books influenced the development of meat inspection regulations in the US",
+          "score": 2.8
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "where was the first mardi gras in the us",
+      "original_score": 3.0,
+      "best_score": 3.2,
+      "best_rewrite": "What are the origins of Mardi Gras in the United States?",
+      "rewrite_scores": [
+        {
+          "rewrite": "What are the origins of Mardi Gras in the United States?",
+          "score": 3.2
+        },
+        {
+          "rewrite": "When and where did the first American Mardi Gras celebration occur?",
+          "score": 2.8
+        },
+        {
+          "rewrite": "What city hosted the first known Mardi Gras in the United States?",
+          "score": 3.0
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "where was the movie just getting started filmed at",
+      "original_score": 4.2,
+      "best_score": 4.2,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What locations were used to film the movie just getting started",
+          "score": 3.0
+        },
+        {
+          "rewrite": "Locations for filming the movie just getting started",
+          "score": 3.6
+        },
+        {
+          "rewrite": "Where were the movie scenes for just getting started shot",
+          "score": 2.8
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "how many years can you be president in russia",
+      "original_score": 2.6,
+      "best_score": 3.0,
+      "best_rewrite": "russian presidency tenure years",
+      "rewrite_scores": [
+        {
+          "rewrite": "term length of russian president",
+          "score": 2.8
+        },
+        {
+          "rewrite": "russian presidency tenure years",
+          "score": 3.0
+        },
+        {
+          "rewrite": "how many terms can russian president serve",
+          "score": 2.6
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "who is the music director of pirates of the caribbean",
+      "original_score": 3.0,
+      "best_score": 3.8,
+      "best_rewrite": "What is the music composer behind the Pirates of the Caribbean film series?",
+      "rewrite_scores": [
+        {
+          "rewrite": "What is the music composer behind the Pirates of the Caribbean film series?",
+          "score": 3.8
+        },
+        {
+          "rewrite": "Who composed the soundtrack for the Pirates of the Caribbean movies?",
+          "score": 3.2
+        },
+        {
+          "rewrite": "What is the name of the composer responsible for the Pirates of the Caribbean score?",
+          "score": 3.2
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "when was mtn mobile money launched in uganda",
+      "original_score": 2.6,
+      "best_score": 2.6,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "Introduction of mobile money services by MTN in Uganda",
+          "score": 2.6
+        },
+        {
+          "rewrite": "MTN Uganda's mobile financial services launch date",
+          "score": 2.4
+        },
+        {
+          "rewrite": "MTN Uganda mobile payments service launch timeline",
+          "score": 2.4
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "where does the iron in your blood come from",
+      "original_score": 3.8,
+      "best_score": 4.0,
+      "best_rewrite": "What is the source of iron in human blood?",
+      "rewrite_scores": [
+        {
+          "rewrite": "What is the source of iron in human blood?",
+          "score": 4.0
+        },
+        {
+          "rewrite": "Where does the body obtain iron from?",
+          "score": 3.8
+        },
+        {
+          "rewrite": "How is iron absorbed by the human body?",
+          "score": 4.0
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "who sang the sunny side of the street",
+      "original_score": 2.6,
+      "best_score": 2.6,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "what song is also known as The Sunny Side of the Street",
+          "score": 2.6
+        },
+        {
+          "rewrite": "who performed The Sun Shines Bright song",
+          "score": 2.0
+        },
+        {
+          "rewrite": "who sang The Nearness of You and other jazz standards",
+          "score": 2.6
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "when did the national anthem became our national anthem",
+      "original_score": 4.6,
+      "best_score": 4.6,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What is the history of our national anthem",
+          "score": 4.4
+        },
+        {
+          "rewrite": "When was the national anthem officially adopted",
+          "score": 4.6
+        },
+        {
+          "rewrite": "When did the lyrics and melody of our national anthem become widely recognized",
+          "score": 4.2
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "who played the emperor in the return of the jedi",
+      "original_score": 5.0,
+      "best_score": 5.0,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "Who played the main character in the Return of the Jedi",
+          "score": 4.0
+        },
+        {
+          "rewrite": "Who portrayed the character with imperial power in Return of the Jedi",
+          "score": 5.0
+        },
+        {
+          "rewrite": "Who was the actor behind the Emperor Palpatine in Star Wars",
+          "score": 4.8
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "who is regarded as the finest stringed instrument builder of all time",
+      "original_score": 3.0,
+      "best_score": 3.6,
+      "best_rewrite": "Who are some of the most renowned stringed instrument luthiers in history?",
+      "rewrite_scores": [
+        {
+          "rewrite": "What are the names of master craftsmen known for exceptional stringed instrument making?",
+          "score": 3.4
+        },
+        {
+          "rewrite": "Who are some of the most renowned stringed instrument luthiers in history?",
+          "score": 3.6
+        },
+        {
+          "rewrite": "What are the most highly acclaimed stringed instrument makers of all time?",
+          "score": 3.4
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "where did the dukes of hazzard take place",
+      "original_score": 3.8,
+      "best_score": 3.8,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What is the setting of the Dukes of Hazzard TV show",
+          "score": 3.8
+        },
+        {
+          "rewrite": "Where is the fictional Hazzard County located",
+          "score": 3.6
+        },
+        {
+          "rewrite": "Can you describe the geography of Hazzard County from the Dukes of Hazzard",
+          "score": 3.2
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "when does the 18th century start and end",
+      "original_score": 3.2,
+      "best_score": 3.4,
+      "best_rewrite": "what were the years of the long 18th century",
+      "rewrite_scores": [
+        {
+          "rewrite": "what are the dates of the 18th century",
+          "score": 2.8
+        },
+        {
+          "rewrite": "when does the 1700s begin and end",
+          "score": 2.6
+        },
+        {
+          "rewrite": "what were the years of the long 18th century",
+          "score": 3.4
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "where did yellowstone national park get its name",
+      "original_score": 2.6,
+      "best_score": 2.6,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What is the origin of the name of Yellowstone National Park",
+          "score": 2.6
+        },
+        {
+          "rewrite": "How did Yellowstone National Park get its name from a geographical perspective",
+          "score": 2.6
+        },
+        {
+          "rewrite": "What is the etymology behind the name of Yellowstone National Park",
+          "score": 2.6
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "who made up the second coalition in 1798",
+      "original_score": 2.8,
+      "best_score": 2.8,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "formation of the 1798 coalition",
+          "score": 2.6
+        },
+        {
+          "rewrite": "members of the 1798 second coalition",
+          "score": 2.8
+        },
+        {
+          "rewrite": "what were the key players in the 1798 coalition",
+          "score": 2.6
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "who initiated the game of cricket among india and how",
+      "original_score": 3.0,
+      "best_score": 3.4,
+      "best_rewrite": "what is the origin of cricket in India",
+      "rewrite_scores": [
+        {
+          "rewrite": "what is the origin of cricket in India",
+          "score": 3.4
+        },
+        {
+          "rewrite": "who introduced cricket to Indian sports culture",
+          "score": 3.2
+        },
+        {
+          "rewrite": "what is the history of cricket in the Indian subcontinent",
+          "score": 3.4
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "when was the last time chicago bears went to the superbowl",
+      "original_score": 4.2,
+      "best_score": 4.2,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What are the Chicago Bears' most recent Super Bowl appearances?",
+          "score": 4.0
+        },
+        {
+          "rewrite": "When did the Chicago Bears last participate in the Super Bowl?",
+          "score": 4.2
+        },
+        {
+          "rewrite": "What is the most recent year the Chicago Bears played in the Super Bowl?",
+          "score": 4.2
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "who holds the record for most lightning strikes",
+      "original_score": 3.4,
+      "best_score": 3.4,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "What are the lightning strike records held by different individuals?",
+          "score": 3.2
+        },
+        {
+          "rewrite": "Who is the person with the highest number of lightning strike injuries?",
+          "score": 3.4
+        },
+        {
+          "rewrite": "What is the name of the person with the most reported lightning strikes in history?",
+          "score": 3.4
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "who was the lady in sons of anarchy",
+      "original_score": 4.6,
+      "best_score": 4.6,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "who is the female character in sons of anarchy",
+          "score": 4.0
+        },
+        {
+          "rewrite": "female main character in sons of anarchy series",
+          "score": 4.2
+        },
+        {
+          "rewrite": "cast of women in sons of anarchy tv show",
+          "score": 3.6
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "during which season of x factor us were fifth harmony formed",
+      "original_score": 3.2,
+      "best_score": 3.6,
+      "best_rewrite": "What season of X Factor did Fifth Harmony form in",
+      "rewrite_scores": [
+        {
+          "rewrite": "When was the girl group Fifth Harmony created on X Factor US",
+          "score": 2.8
+        },
+        {
+          "rewrite": "What season of X Factor did Fifth Harmony form in",
+          "score": 3.6
+        },
+        {
+          "rewrite": "At what point in X Factor US were the members of Fifth Harmony chosen",
+          "score": 2.6
+        }
+      ],
+      "outcome": "fixed"
+    },
+    {
+      "question": "who sang put the lime in the coconut and shake it all up",
+      "original_score": 2.8,
+      "best_score": 2.8,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "Who sang the song 'Put the Lime in the Coconut'?",
+          "score": 2.6
+        },
+        {
+          "rewrite": "Who performed the song 'Put the Lime in the Coconut and Shake It All Up'?",
+          "score": 2.4
+        },
+        {
+          "rewrite": "Who recorded the hit song 'Put the Lime in the Coconut'?",
+          "score": 2.4
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "who should be called the father of radio",
+      "original_score": 3.0,
+      "best_score": 3.4,
+      "best_rewrite": "what is the origin of radio technology",
+      "rewrite_scores": [
+        {
+          "rewrite": "what is the origin of radio technology",
+          "score": 3.4
+        },
+        {
+          "rewrite": "who invented the first practical radio",
+          "score": 3.0
+        },
+        {
+          "rewrite": "what is guglielmo marconi's significance to radio",
+          "score": 1.6
+        }
+      ],
+      "outcome": "improved"
+    },
+    {
+      "question": "who has the most hat tricks in cricket",
+      "original_score": 4.2,
+      "best_score": 4.2,
+      "best_rewrite": null,
+      "rewrite_scores": [
+        {
+          "rewrite": "Who has scored the most hat-tricks in cricket history?",
+          "score": 3.0
+        },
+        {
+          "rewrite": "Which cricket player has achieved the most hat-tricks?",
+          "score": 4.0
+        },
+        {
+          "rewrite": "Who has the highest number of cricket hat-tricks in recorded history?",
+          "score": 3.2
+        }
+      ],
+      "outcome": "fixed"
+    }
+  ]
+}
