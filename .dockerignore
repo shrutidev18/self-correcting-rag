@@ -1,0 +1,26 @@
+# Virtual environment
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Chroma index — mounted as a volume instead
+chroma_db/
+
+# Evaluation artefacts
+evaluation/results/
+
+# Git / editor
+.git/
+.gitignore
+.github/
+.vscode/
+*.md
+
+# Secrets
+.env
+
+# Test cache
+.pytest_cache/

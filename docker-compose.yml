@@ -1,0 +1,22 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sc_rag_app
+    ports:
+      - "7860:7860"
+    env_file:
+      - .env
+    environment:
+      CHROMA_DB_PATH: /app/chroma_db
+    volumes:
+      - ./chroma_db:/app/chroma_db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:7860')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
