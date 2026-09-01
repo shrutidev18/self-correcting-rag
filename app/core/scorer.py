@@ -8,7 +8,7 @@ from app.utils.logger import logger
 
 
 # ── Prompt ────────────────────────────────────────────────────────────────────
-SCORER_SYSTEM = "You are a relevance judge. Respond with ONLY a single digit 1-5. No explanation."
+SCORER_SYSTEM = "You are a relevance judge. You must respond with exactly one digit: 1, 2, 3, 4, or 5. Nothing else."
 
 SCORER_PROMPT = """You are a relevance judge. Given a question and a document chunk,
 rate how useful this chunk is for answering the question.
@@ -58,7 +58,7 @@ class Scorer:
                 {"role": "user",   "content": prompt},
             ],
             temperature=0.0,
-            max_tokens=10,
+            max_tokens=500,
         )
 
         raw    = response.choices[0].message.content.strip()
