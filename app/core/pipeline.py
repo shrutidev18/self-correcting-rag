@@ -19,26 +19,22 @@ MAX_ATTEMPTS = 2
 
 
 # ── State Definition ──────────────────────────────────────────────────────────
-# This is the shared state that flows through every node.
-# Each node receives the full state and returns only the fields it updates.
-
 class RAGState(TypedDict):
-    query:              str           # original user question
-    current_query:      str           # may change after reformulation
-    chunks:             list          # retrieved chunks
-    scores:             list          # per-chunk scores from scorer
-    mean_score:         float         # average score
-    quality:            str           # "good" or "poor"
-    reformulations:     list          # list of rewritten queries tried
-    attempts:           int           # number of retrieval attempts
-    answer:             str           # final answer
-    sources:            list          # source chunk IDs
-    latency_ms:         float         # total latency
-    reformulated_query: str           # best rewrite used (for logging)
+    query:              str
+    current_query:      str
+    chunks:             list
+    scores:             list
+    mean_score:         float
+    quality:            str
+    reformulations:     list
+    attempts:           int
+    answer:             str
+    sources:            list
+    latency_ms:         float
+    reformulated_query: str
 
 
 # ── Node Functions ────────────────────────────────────────────────────────────
-# Each node takes the full state and returns a dict of updated fields only.
 
 def make_retrieve_node(retriever: Retriever):
     def retrieve_node(state: RAGState) -> dict:
@@ -65,11 +61,6 @@ def make_score_node(scorer: Scorer):
 
 
 def decide_node(state: RAGState) -> str:
-    """
-    Router — decides which node to go to next.
-    Returns the name of the next node as a string.
-    This is used as a conditional edge in LangGraph.
-    """
     if state["quality"] == "good":
         logger.info("[decide_node] Quality good → generate")
         return "generate"
@@ -82,22 +73,49 @@ def decide_node(state: RAGState) -> str:
     return "reformulate"
 
 
-def make_reformulate_node(reformulator: Reformulator):
+def make_reformulate_node(retriever: Retriever, scorer: Scorer, reformulator: Reformulator):
     def reformulate_node(state: RAGState) -> dict:
         logger.info(f"[reformulate_node] Reformulating: '{state['current_query'][:60]}'")
         rewrites = reformulator.reformulate(state["current_query"])
 
-        # Pick the first valid rewrite (best-pick logic runs via re-scoring in score_node)
-        new_query = rewrites[0] if rewrites else state["current_query"]
+        if not rewrites:
+            logger.warning("[reformulate_node] No rewrites generated — keeping original query")
+            return {
+                "attempts":       state["attempts"] + 1,
+                "reformulations": state.get("reformulations", []),
+            }
 
-        updated_reformulations = state.get("reformulations", []) + rewrites
-        logger.info(f"[reformulate_node] New query: '{new_query}'")
+        # ── Score all rewrites and pick the best one ──────────────────────────
+        best_query  = None
+        best_score  = state["mean_score"]  # must beat current score
+        best_chunks = state["chunks"]
+
+        for rewrite in rewrites:
+            r_chunks  = retriever.retrieve(rewrite, k=config.TOP_K)
+            r_scoring = scorer.score(rewrite, r_chunks)
+            logger.info(
+                f"[reformulate_node] Rewrite: '{rewrite[:50]}' "
+                f"| score={r_scoring['mean']}"
+            )
+            if r_scoring["mean"] > best_score:
+                best_score  = r_scoring["mean"]
+                best_query  = rewrite
+                best_chunks = r_chunks
+
+        # If no rewrite improved things, keep original
+        if best_query is None:
+            logger.info("[reformulate_node] No rewrite improved score — keeping original")
+            best_query  = state["current_query"]
+            best_chunks = state["chunks"]
+
+        logger.info(f"[reformulate_node] Best query: '{best_query[:60]}' | score={best_score}")
 
         return {
-            "current_query":      new_query,
-            "reformulations":     updated_reformulations,
+            "current_query":      best_query,
+            "chunks":             best_chunks,
+            "reformulations":     state.get("reformulations", []) + rewrites,
             "attempts":           state["attempts"] + 1,
-            "reformulated_query": new_query,
+            "reformulated_query": best_query,
         }
     return reformulate_node
 
@@ -134,30 +152,12 @@ class BasicRAGPipeline:
         logger.info("BasicRAGPipeline (LangGraph) ready")
 
     def _build_graph(self) -> any:
-        """
-        Build the LangGraph state machine.
-
-        Nodes:
-            retrieve   → fetch top-k chunks
-            score      → score chunks, set quality flag
-            decide     → router: good→generate, poor→reformulate or fallback
-            reformulate→ rewrite query, increment attempts
-            generate   → produce final answer
-            fallback   → return insufficient context
-
-        Edges:
-            retrieve → score → decide (conditional)
-            decide → generate | reformulate | fallback
-            reformulate → retrieve (loop back)
-            generate → END
-            fallback → END
-        """
         graph = StateGraph(RAGState)
 
         # ── Add nodes ─────────────────────────────────────────────────────────
         graph.add_node("retrieve",    make_retrieve_node(self.retriever))
         graph.add_node("score",       make_score_node(self.scorer))
-        graph.add_node("reformulate", make_reformulate_node(self.reformulator))
+        graph.add_node("reformulate", make_reformulate_node(self.retriever, self.scorer, self.reformulator))
         graph.add_node("generate",    make_generate_node(self.generator))
         graph.add_node("fallback",    fallback_node)
 
@@ -168,11 +168,10 @@ class BasicRAGPipeline:
             "reformulate": "reformulate",
             "fallback":    "fallback",
         })
-        graph.add_edge("reformulate", "retrieve")   # loop back
+        graph.add_edge("reformulate", "retrieve")
         graph.add_edge("generate",    END)
         graph.add_edge("fallback",    END)
 
-        # ── Entry point ───────────────────────────────────────────────────────
         graph.set_entry_point("retrieve")
 
         return graph.compile()
@@ -180,7 +179,6 @@ class BasicRAGPipeline:
     def run(self, query: str, k: int = None) -> dict:
         t0 = time.time()
 
-        # ── Initial state ─────────────────────────────────────────────────────
         initial_state: RAGState = {
             "query":              query,
             "current_query":      query,
@@ -196,9 +194,7 @@ class BasicRAGPipeline:
             "reformulated_query": "",
         }
 
-        # ── Run the graph ─────────────────────────────────────────────────────
-        final_state = self.graph.invoke(initial_state)
-
+        final_state   = self.graph.invoke(initial_state)
         total_latency = (time.time() - t0) * 1000
 
         log_query(

@@ -1,0 +1,25 @@
+{
+  "faithfulness": {
+    "baseline": 0.825,
+    "scrag": 0.62,
+    "delta": -0.205,
+    "pct_change": -24.85
+  },
+  "answer_relevancy": {
+    "baseline": 0.8,
+    "scrag": 0.54,
+    "delta": -0.26,
+    "pct_change": -32.5
+  },
+  "context_recall": {
+    "baseline": 0.505,
+    "scrag": 0.52,
+    "delta": 0.015,
+    "pct_change": 2.97
+  },
+  "efficiency": {
+    "retry_rate": 0.39,
+    "retry_count": 39,
+    "avg_latency_ms": 24843.59
+  }
+}

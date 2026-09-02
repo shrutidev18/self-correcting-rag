@@ -58,7 +58,7 @@ class Scorer:
                 {"role": "user",   "content": prompt},
             ],
             temperature=0.0,
-            max_tokens=500,
+            max_tokens=10,
         )
 
         raw    = response.choices[0].message.content.strip()

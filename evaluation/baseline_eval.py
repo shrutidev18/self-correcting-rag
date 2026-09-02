@@ -6,7 +6,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from groq import Groq
-from app.core.pipeline import BasicRAGPipeline
+from app.core.retriever import Retriever
+from app.core.generator import Generator
 from app.utils.config import config
 from app.utils.logger import logger
 
@@ -96,8 +97,11 @@ def run_baseline_evaluation():
     with open(TEST_QUESTIONS_PATH, "r", encoding="utf-8") as f:
         test_questions = json.load(f)[:100]
 
-    logger.info(f"Running evaluation on {len(test_questions)} questions...")
-    pipeline = BasicRAGPipeline()
+    logger.info(f"Running BASELINE evaluation on {len(test_questions)} questions...")
+
+    # ── Direct retriever + generator, NO scorer, NO self-correction ──────────
+    retriever = Retriever()
+    generator = Generator()
 
     faithfulness_scores   = []
     relevancy_scores      = []
@@ -107,19 +111,21 @@ def run_baseline_evaluation():
     for i, q in enumerate(test_questions):
         logger.info(f"[{i+1}/{len(test_questions)}] {q['question'][:60]}...")
 
-        result   = pipeline.run(q["question"])
-        contexts = [c["text"] for c in result["chunks"]]
+        # Retrieve chunks directly
+        chunks   = retriever.retrieve(q["question"], k=config.TOP_K)
+        contexts = [c["text"] for c in chunks]
+
+        # Generate answer directly
+        result   = generator.generate(q["question"], chunks)
         answer   = result["answer"]
         question = q["question"]
         truth    = q["answer"]
 
-        time.sleep(1)
+        # Score the answer
         f_score = score_faithfulness(answer, contexts)
-        time.sleep(1)
         r_score = score_answer_relevancy(question, answer)
-        time.sleep(1)
         c_score = score_context_recall(contexts, truth)
-        time.sleep(2)
+        time.sleep(1)
 
         faithfulness_scores.append(f_score)
         relevancy_scores.append(r_score)

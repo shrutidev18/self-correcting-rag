@@ -120,7 +120,7 @@ class Reformulator:
                     {"role": "user",   "content": prompt},
                 ],
                 temperature=0.7,
-                max_tokens=1024,   # increased — dicts need more tokens
+                max_tokens=500,   # increased — dicts need more tokens
             )
 
             raw      = response.choices[0].message.content.strip()
