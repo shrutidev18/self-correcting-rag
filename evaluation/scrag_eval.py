@@ -6,9 +6,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from groq import Groq
-from app.core.pipeline import BasicRAGPipeline
-from app.utils.config import config
-from app.utils.logger import logger
+from app.core.retriever    import Retriever
+from app.core.generator    import Generator
+from app.core.reformulator import Reformulator
+from app.utils.config      import config
+from app.utils.logger      import logger
 
 TEST_QUESTIONS_PATH = Path("./data/test_questions.json")
 BASELINE_PATH       = Path("./evaluation/results/baseline_scores.json")
@@ -30,7 +32,6 @@ Context: {context_str[:1000]}
 Answer: {answer}
 
 Reply with ONLY a number: 0, 0.5, or 1"""
-
     try:
         response = client.chat.completions.create(
             model=config.LLM_MODEL,
@@ -54,7 +55,6 @@ Question: {question}
 Answer: {answer}
 
 Reply with ONLY a number: 0, 0.5, or 1"""
-
     try:
         response = client.chat.completions.create(
             model=config.LLM_MODEL,
@@ -79,7 +79,6 @@ Context: {context_str[:1000]}
 Ground truth answer: {ground_truth[:300]}
 
 Reply with ONLY a number: 0, 0.5, or 1"""
-
     try:
         response = client.chat.completions.create(
             model=config.LLM_MODEL,
@@ -98,8 +97,14 @@ def run_scrag_evaluation():
     with open(TEST_QUESTIONS_PATH, "r", encoding="utf-8") as f:
         test_questions = json.load(f)[:100]
 
-    logger.info(f"Running self-correcting RAG evaluation on {len(test_questions)} questions...")
-    pipeline = BasicRAGPipeline()
+    logger.info(f"Running SC-RAG evaluation on {len(test_questions)} questions...")
+
+    # ── Use retriever + reformulator directly, NO scorer ─────────────────────
+    # This saves ~100,000 tokens while still testing self-correction.
+    # Self-correction logic: if first retrieval cosine score is low, reformulate.
+    retriever    = Retriever()
+    generator    = Generator()
+    reformulator = Reformulator()
 
     faithfulness_scores   = []
     relevancy_scores      = []
@@ -108,28 +113,53 @@ def run_scrag_evaluation():
     retry_count           = 0
     total_latency         = 0.0
 
+    COSINE_THRESHOLD = 0.5  # if best chunk score < 0.5, reformulate
+
     for i, q in enumerate(test_questions):
         logger.info(f"[{i+1}/{len(test_questions)}] {q['question'][:60]}...")
 
-        result   = pipeline.run(q["question"])
-        contexts = [c["text"] for c in result["chunks"]]
-        answer   = result["answer"]
+        t0       = time.time()
         question = q["question"]
         truth    = q["answer"]
+        attempts = 1
 
-        # Track retries
-        if result["attempts"] > 1:
+        # ── Step 1: Retrieve ──────────────────────────────────────────────────
+        chunks = retriever.retrieve(question, k=config.TOP_K)
+        best_cosine = max(c["score"] for c in chunks) if chunks else 0
+
+        # ── Step 2: Self-correct if cosine score is low ───────────────────────
+        reformulated_query = ""
+        if best_cosine < COSINE_THRESHOLD:
+            logger.info(f"  Low cosine score {best_cosine:.3f} → reformulating...")
+            rewrites = reformulator.reformulate(question)
+            attempts = 2
             retry_count += 1
 
-        total_latency += result["latency_ms"]
+            best_chunks  = chunks
+            best_score   = best_cosine
 
-        time.sleep(1)
+            for rewrite in rewrites:
+                r_chunks = retriever.retrieve(rewrite, k=config.TOP_K)
+                r_score  = max(c["score"] for c in r_chunks) if r_chunks else 0
+                if r_score > best_score:
+                    best_score         = r_score
+                    best_chunks        = r_chunks
+                    reformulated_query = rewrite
+
+            chunks = best_chunks
+
+        # ── Step 3: Generate ──────────────────────────────────────────────────
+        result   = generator.generate(question, chunks)
+        answer   = result["answer"]
+        contexts = [c["text"] for c in chunks]
+        latency  = (time.time() - t0) * 1000
+        total_latency += latency
+
+        # ── Step 4: Evaluate ──────────────────────────────────────────────────
         f_score = score_faithfulness(answer, contexts)
-        time.sleep(1)
         r_score = score_answer_relevancy(question, answer)
-        time.sleep(1)
         c_score = score_context_recall(contexts, truth)
-        time.sleep(2)
+        time.sleep(1)
 
         faithfulness_scores.append(f_score)
         relevancy_scores.append(r_score)
@@ -138,9 +168,9 @@ def run_scrag_evaluation():
         individual_results.append({
             "question":           question,
             "answer":             answer,
-            "attempts":           result["attempts"],
-            "reformulated_query": result.get("reformulated_query", ""),
-            "mean_score":         result["scoring"]["mean"],
+            "attempts":           attempts,
+            "reformulated_query": reformulated_query,
+            "best_cosine":        round(best_cosine, 4),
             "faithfulness":       f_score,
             "answer_relevancy":   r_score,
             "context_recall":     c_score,
@@ -148,64 +178,61 @@ def run_scrag_evaluation():
 
         logger.info(
             f"  F={f_score} | R={r_score} | C={c_score} "
-            f"| attempts={result['attempts']}"
+            f"| attempts={attempts} | cosine={best_cosine:.3f}"
         )
 
-    #Aggregate scores 
+    # ── Aggregate ─────────────────────────────────────────────────────────────
     scrag_scores = {
-        "faithfulness":       round(sum(faithfulness_scores)   / len(faithfulness_scores),   4),
-        "answer_relevancy":   round(sum(relevancy_scores)      / len(relevancy_scores),      4),
-        "context_recall":     round(sum(context_recall_scores) / len(context_recall_scores), 4),
-        "num_questions":      len(test_questions),
-        "retry_count":        retry_count,
-        "retry_rate":         round(retry_count / len(test_questions), 4),
-        "avg_latency_ms":     round(total_latency / len(test_questions), 2),
-        "individual":         individual_results,
+        "faithfulness":     round(sum(faithfulness_scores)   / len(faithfulness_scores),   4),
+        "answer_relevancy": round(sum(relevancy_scores)      / len(relevancy_scores),      4),
+        "context_recall":   round(sum(context_recall_scores) / len(context_recall_scores), 4),
+        "num_questions":    len(test_questions),
+        "retry_count":      retry_count,
+        "retry_rate":       round(retry_count / len(test_questions), 4),
+        "avg_latency_ms":   round(total_latency / len(test_questions), 2),
+        "individual":       individual_results,
     }
 
     with open(RESULTS_PATH, "w", encoding="utf-8") as f:
         json.dump(scrag_scores, f, indent=2, ensure_ascii=False)
 
-    # Load baseline and compare 
+    # ── Compare with baseline ─────────────────────────────────────────────────
     with open(BASELINE_PATH, "r", encoding="utf-8") as f:
         baseline = json.load(f)
 
-    def delta(new, old):
-        return round(new - old, 4)
-
-    def pct(new, old):
-        return round(((new - old) / old) * 100, 2)
+    def delta(new, old): return round(new - old, 4)
+    def pct(new, old):   return round(((new - old) / old) * 100, 2)
 
     comparison = {
         "faithfulness": {
-            "baseline":    baseline["faithfulness"],
-            "scrag":       scrag_scores["faithfulness"],
-            "delta":       delta(scrag_scores["faithfulness"], baseline["faithfulness"]),
-            "pct_change":  pct(scrag_scores["faithfulness"],  baseline["faithfulness"]),
+            "baseline":   baseline["faithfulness"],
+            "scrag":      scrag_scores["faithfulness"],
+            "delta":      delta(scrag_scores["faithfulness"], baseline["faithfulness"]),
+            "pct_change": pct(scrag_scores["faithfulness"],  baseline["faithfulness"]),
         },
         "answer_relevancy": {
-            "baseline":    baseline["answer_relevancy"],
-            "scrag":       scrag_scores["answer_relevancy"],
-            "delta":       delta(scrag_scores["answer_relevancy"], baseline["answer_relevancy"]),
-            "pct_change":  pct(scrag_scores["answer_relevancy"],  baseline["answer_relevancy"]),
+            "baseline":   baseline["answer_relevancy"],
+            "scrag":      scrag_scores["answer_relevancy"],
+            "delta":      delta(scrag_scores["answer_relevancy"], baseline["answer_relevancy"]),
+            "pct_change": pct(scrag_scores["answer_relevancy"],  baseline["answer_relevancy"]),
         },
         "context_recall": {
-            "baseline":    baseline["context_recall"],
-            "scrag":       scrag_scores["context_recall"],
-            "delta":       delta(scrag_scores["context_recall"], baseline["context_recall"]),
-            "pct_change":  pct(scrag_scores["context_recall"],  baseline["context_recall"]),
+            "baseline":   baseline["context_recall"],
+            "scrag":      scrag_scores["context_recall"],
+            "delta":      delta(scrag_scores["context_recall"], baseline["context_recall"]),
+            "pct_change": pct(scrag_scores["context_recall"],  baseline["context_recall"]),
         },
         "efficiency": {
-            "retry_rate":      scrag_scores["retry_rate"],
-            "retry_count":     scrag_scores["retry_count"],
-            "avg_latency_ms":  scrag_scores["avg_latency_ms"],
+            "retry_rate":     scrag_scores["retry_rate"],
+            "retry_count":    scrag_scores["retry_count"],
+            "avg_latency_ms": scrag_scores["avg_latency_ms"],
         },
     }
 
     with open(COMPARISON_PATH, "w", encoding="utf-8") as f:
         json.dump(comparison, f, indent=2, ensure_ascii=False)
 
-    #Print results
+    # ── Print results ─────────────────────────────────────────────────────────
     print("\n" + "─" * 60)
     print("SELF-CORRECTING RAG — EVALUATION RESULTS")
     print("─" * 60)
@@ -219,9 +246,9 @@ def run_scrag_evaluation():
         )
     print("─" * 60)
     print(f"\nEfficiency:")
-    print(f"  Retry rate       : {scrag_scores['retry_rate']*100:.1f}% of queries triggered retry")
-    print(f"  Avg latency      : {scrag_scores['avg_latency_ms']:.0f}ms per query")
-    print(f"  Questions scored : {scrag_scores['num_questions']}")
+    print(f"  Retry rate    : {scrag_scores['retry_rate']*100:.1f}% of queries triggered retry")
+    print(f"  Avg latency   : {scrag_scores['avg_latency_ms']:.0f}ms per query")
+    print(f"  Questions     : {scrag_scores['num_questions']}")
     print("─" * 60)
     print(f"Saved → {RESULTS_PATH}")
     print(f"Saved → {COMPARISON_PATH}")

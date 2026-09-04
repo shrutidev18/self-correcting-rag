@@ -1,25 +1,25 @@
 {
   "faithfulness": {
-    "baseline": 0.825,
-    "scrag": 0.62,
-    "delta": -0.205,
-    "pct_change": -24.85
+    "baseline": 0.9,
+    "scrag": 0.845,
+    "delta": -0.055,
+    "pct_change": -6.11
   },
   "answer_relevancy": {
-    "baseline": 0.8,
-    "scrag": 0.54,
-    "delta": -0.26,
-    "pct_change": -32.5
+    "baseline": 0.715,
+    "scrag": 0.775,
+    "delta": 0.06,
+    "pct_change": 8.39
   },
   "context_recall": {
-    "baseline": 0.505,
-    "scrag": 0.52,
-    "delta": 0.015,
-    "pct_change": 2.97
+    "baseline": 0.875,
+    "scrag": 0.86,
+    "delta": -0.015,
+    "pct_change": -1.71
   },
   "efficiency": {
-    "retry_rate": 0.39,
-    "retry_count": 39,
-    "avg_latency_ms": 24843.59
+    "retry_rate": 0.03,
+    "retry_count": 3,
+    "avg_latency_ms": 7490.31
   }
 }
