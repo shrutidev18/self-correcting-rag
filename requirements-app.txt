@@ -1,0 +1,10 @@
+groq
+sentence-transformers
+chromadb
+python-dotenv
+tqdm
+numpy
+gradio
+langgraph
+langchain-core
+pysqlite3-binary

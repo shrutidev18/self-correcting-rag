@@ -11,6 +11,9 @@ services:
       - .env
     environment:
       CHROMA_DB_PATH: /app/chroma_db
+      CURL_CA_BUNDLE: ""
+      REQUESTS_CA_BUNDLE: ""
+      PYTHONHTTPSVERIFY: "0"
     volumes:
       - ./chroma_db:/app/chroma_db
     restart: unless-stopped

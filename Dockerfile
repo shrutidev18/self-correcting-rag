@@ -1,18 +1,12 @@
-FROM python:3.11-slim
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        git \
-        build-essential \
-    && rm -rf /var/lib/apt/lists/*
+FROM python:3.11-slim-bullseye
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY requirements-app.txt .
 
 RUN pip install --upgrade pip \
  && pip install --only-binary numpy "numpy<2" \
- && pip install --no-cache-dir -r requirements.txt \
- && pip install --no-cache-dir gradio
+ && pip install --no-cache-dir -r requirements-app.txt
 
 COPY . .
 
@@ -25,7 +19,7 @@ ENV PYTHONUNBUFFERED=1 \
     TOP_K=5 \
     CHUNK_SIZE=256 \
     CHUNK_OVERLAP=32 \
-    QUALITY_THRESHOLD=3.0 \
+    QUALITY_THRESHOLD=1.5 \
     MAX_RETRIES=2
 
 EXPOSE 7860
