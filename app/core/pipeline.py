@@ -143,25 +143,23 @@ def fallback_node(state: RAGState) -> dict:
 
 class BasicRAGPipeline:
 
-    def __init__(self):
-        self.retriever    = Retriever()
+    def __init__(self, collection_name: str = None):
+        # Use provided collection name or fall back to default from config
+        self.collection_name = collection_name or config.CHROMA_COLLECTION_NAME
+        self.retriever    = Retriever(collection_name=self.collection_name)
         self.generator    = Generator()
         self.scorer       = Scorer()
         self.reformulator = Reformulator()
         self.graph        = self._build_graph()
-        logger.info("BasicRAGPipeline (LangGraph) ready")
+        logger.info(f"BasicRAGPipeline (LangGraph) ready | collection={self.collection_name}")
 
     def _build_graph(self) -> any:
         graph = StateGraph(RAGState)
-
-        # ── Add nodes ─────────────────────────────────────────────────────────
         graph.add_node("retrieve",    make_retrieve_node(self.retriever))
         graph.add_node("score",       make_score_node(self.scorer))
         graph.add_node("reformulate", make_reformulate_node(self.retriever, self.scorer, self.reformulator))
         graph.add_node("generate",    make_generate_node(self.generator))
         graph.add_node("fallback",    fallback_node)
-
-        # ── Add edges ─────────────────────────────────────────────────────────
         graph.add_edge("retrieve", "score")
         graph.add_conditional_edges("score", decide_node, {
             "generate":    "generate",
@@ -171,9 +169,7 @@ class BasicRAGPipeline:
         graph.add_edge("reformulate", "retrieve")
         graph.add_edge("generate",    END)
         graph.add_edge("fallback",    END)
-
         graph.set_entry_point("retrieve")
-
         return graph.compile()
 
     def run(self, query: str, k: int = None) -> dict:

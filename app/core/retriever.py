@@ -9,7 +9,7 @@ from app.utils.logger import logger
 
 class Retriever:
 
-    def __init__(self, reset_db: bool = False):
+    def __init__(self, reset_db: bool = False, collection_name: str = None):
         logger.info(f"Loading embedding model: {config.EMBEDDING_MODEL}")
         self.embedder = SentenceTransformer(config.EMBEDDING_MODEL)
 
@@ -18,18 +18,20 @@ class Retriever:
             settings=Settings(anonymized_telemetry=False),
         )
 
+        self.collection_name = collection_name or config.CHROMA_COLLECTION_NAME
+
         if reset_db:
             try:
-                self.client.delete_collection(config.CHROMA_COLLECTION_NAME)
+                self.client.delete_collection(self.collection_name)
                 logger.info("Existing collection deleted")
             except Exception:
                 pass
 
         self.collection = self.client.get_or_create_collection(
-            name=config.CHROMA_COLLECTION_NAME,
+            name=self.collection_name,
             metadata={"hnsw:space": "cosine"},
         )
-        logger.info(f"Collection ready — {self.collection.count()} chunks indexed")
+        logger.info(f"Collection '{self.collection_name}' ready — {self.collection.count()} chunks indexed")
 
     def _chunk_text(self, text: str) -> list:
         words = text.split()

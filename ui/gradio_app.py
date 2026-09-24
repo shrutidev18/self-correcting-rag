@@ -5,41 +5,46 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import gradio as gr
 from app.core.pipeline import BasicRAGPipeline
+from app.core.document_processor import process_file
+from app.core.indexer import Indexer
 from app.utils.logger import logger
 
-pipeline = None
+# ── Global pipeline cache ─────────────────────────────────────────────────────
+_pipelines = {}
 
 
-def load_pipeline():
-    global pipeline
-    if pipeline is None:
-        logger.info("Loading pipeline...")
-        pipeline = BasicRAGPipeline()
-        logger.info("Pipeline ready!")
+def get_pipeline(collection_name: str) -> BasicRAGPipeline:
+    if collection_name not in _pipelines:
+        logger.info(f"Loading pipeline for collection: {collection_name}")
+        _pipelines[collection_name] = BasicRAGPipeline(collection_name=collection_name)
+    return _pipelines[collection_name]
 
 
-def ask_question(question: str):
+# ── Ask tab functions ─────────────────────────────────────────────────────────
+
+def ask_question(question: str, collection_name: str):
     if not question.strip():
         return "Please enter a question.", "", "", ""
 
-    load_pipeline()
-    result = pipeline.run(question)
+    if not collection_name or collection_name.strip() == "":
+        collection_name = "sc_rag_docs"
 
-    answer      = result["answer"]
-    chunks      = result["chunks"]
-    scoring     = result.get("scoring", {})
-    attempts    = result.get("attempts", 1)
-    latency     = result.get("latency_ms", 0)
+    try:
+        pipeline = get_pipeline(collection_name.strip())
+        result   = pipeline.run(question)
+    except RuntimeError as e:
+        return str(e), "", "", ""
+
+    answer       = result["answer"]
+    scoring      = result.get("scoring", {})
+    attempts     = result.get("attempts", 1)
+    latency      = result.get("latency_ms", 0)
     reformulated = result.get("reformulated_query", "")
+    quality      = scoring.get("quality", "unknown")
+    mean_score   = scoring.get("mean", 0.0)
+    scores       = scoring.get("scores", [])
+    chunks       = result["chunks"]
 
-    quality    = scoring.get("quality", "unknown")
-    mean_score = scoring.get("mean", 0.0)
-    scores     = scoring.get("scores", [])
-
-    # ── Answer ────────────────────────────────────────────────────────────────
-    answer_md = answer
-
-    # ── How it worked ─────────────────────────────────────────────────────────
     if attempts == 1 and quality == "good":
         how_md = f"""### What happened
 
@@ -64,7 +69,6 @@ The initial retrieval wasn't useful enough, so the system automatically rewrote 
 
 | | |
 |---|---|
-| Initial quality | Poor ({scoring.get('mean', 0):.1f} / 5.0) |
 | After rewrite | Better ({mean_score:.1f} / 5.0) |
 | Attempts needed | {attempts} |
 | Time taken | {latency:.0f}ms |
@@ -80,29 +84,115 @@ The system tried rewriting the question but still couldn't find enough relevant 
 | Time taken | {latency:.0f}ms |
 """
 
-    # ── Sources ───────────────────────────────────────────────────────────────
     sources_md = "### Sources used\n\n"
     for i, chunk in enumerate(chunks, 1):
-        relevance = scores[i-1] if i-1 < len(scores) else "—"
+        relevance   = scores[i-1] if i-1 < len(scores) else "—"
         sources_md += f"**{i}.** `{chunk['id']}` — relevance {relevance}/5\n\n"
         sources_md += f"{chunk['text'][:250]}...\n\n"
         if i < len(chunks):
             sources_md += "---\n\n"
 
-    # ── Stats ─────────────────────────────────────────────────────────────────
     stats_md = f"""### Stats
 
 | Metric | Value |
 |---|---|
 | Latency | {latency:.0f}ms |
 | Attempts | {attempts} |
+| Collection | {collection_name} |
 | Chunks scored | {len(chunks)} |
 | Threshold | {scoring.get('threshold', 2.0)} |
 | Chunk scores | {scores} |
 """
 
-    return answer_md, how_md, sources_md, stats_md
+    return answer, how_md, sources_md, stats_md
 
+
+# ── Upload tab functions ──────────────────────────────────────────────────────
+
+def upload_document(file_path: str, collection_name: str):
+    print(f"DEBUG: upload called | file_path={file_path} | collection={collection_name}")
+
+    if file_path is None or file_path == "":
+        return "Please upload a file first.", ""
+
+    if not collection_name or collection_name.strip() == "":
+        return "Please enter a collection name.", ""
+
+    collection_name = collection_name.strip().lower().replace(" ", "_")
+
+    try:
+        file_result = process_file(file_path)
+        text        = file_result["text"]
+        filename    = file_result["filename"]
+        chars       = file_result["chars"]
+
+        indexer = Indexer(collection_name=collection_name)
+        result  = indexer.index_text(text, filename=filename)
+
+        status = f"""✅ **{filename}** indexed successfully
+
+| | |
+|---|---|
+| Collection | `{collection_name}` |
+| Chunks created | {result['chunks']} |
+| Characters processed | {chars:,} |
+| Document ID | `{result['doc_id']}` |
+
+You can now ask questions in the **Ask** tab using collection `{collection_name}`.
+"""
+        doc_list = list_documents(collection_name)
+        return status, doc_list
+
+    except ValueError as e:
+        return f"❌ Error: {str(e)}", ""
+    except Exception as e:
+        logger.error(f"Upload failed: {e}")
+        return f"❌ Upload failed: {str(e)}", ""
+
+
+def list_documents(collection_name: str) -> str:
+    if not collection_name or collection_name.strip() == "":
+        return ""
+
+    collection_name = collection_name.strip().lower().replace(" ", "_")
+
+    try:
+        indexer = Indexer(collection_name=collection_name)
+        docs    = indexer.list_documents()
+
+        if not docs:
+            return f"No documents indexed in collection `{collection_name}` yet."
+
+        result = f"### Documents in `{collection_name}`\n\n"
+        for doc in docs:
+            result += f"- **{doc['filename']}** — {doc['chunks']} chunks (`{doc['doc_id']}`)\n"
+
+        return result
+
+    except Exception as e:
+        return f"Error listing documents: {str(e)}"
+
+
+def delete_document(doc_id: str, collection_name: str) -> str:
+    if not doc_id.strip() or not collection_name.strip():
+        return "Please provide both document ID and collection name."
+
+    collection_name = collection_name.strip().lower().replace(" ", "_")
+
+    try:
+        indexer = Indexer(collection_name=collection_name)
+        deleted = indexer.delete_document(doc_id.strip())
+
+        if deleted == 0:
+            return f"❌ No document found with ID `{doc_id}`"
+
+        return f"✅ Deleted {deleted} chunks for document `{doc_id}`"
+
+    except Exception as e:
+        return f"❌ Delete failed: {str(e)}"
+
+
+# ── CSS ───────────────────────────────────────────────────────────────────────
 
 CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
@@ -114,7 +204,6 @@ body, .gradio-container {
     color: #ffffff !important;
 }
 
-/* Header */
 .app-header {
     background: linear-gradient(135deg, #2d3250 0%, #424769 100%);
     border-radius: 16px;
@@ -137,50 +226,29 @@ body, .gradio-container {
     line-height: 1.6;
 }
 
-/* Input area */
-.input-area {
-    background: #424769 !important;
-    border-radius: 12px !important;
-    border: 1px solid #676f9d !important;
-    padding: 4px !important;
-}
-
 .input-area textarea {
     background: #424769 !important;
     color: #ffffff !important;
     font-size: 1rem !important;
-    border: none !important;
 }
 
-.input-area textarea::placeholder { color: #676f9d !important; }
-
-/* Ask button */
 .ask-btn {
     background: #f9b17a !important;
     color: #2d3250 !important;
     font-weight: 700 !important;
-    font-size: 1rem !important;
     border-radius: 12px !important;
     border: none !important;
-    height: 100% !important;
-    transition: opacity 0.2s !important;
 }
 
-.ask-btn:hover { opacity: 0.85 !important; }
-
-/* Answer box */
 .answer-panel {
     background: #424769 !important;
     border-radius: 12px !important;
     border-left: 4px solid #f9b17a !important;
     padding: 20px 24px !important;
-    font-size: 1.05rem !important;
-    line-height: 1.8 !important;
     color: #ffffff !important;
     min-height: 80px !important;
 }
 
-/* Info panels */
 .info-panel {
     background: #363b5e !important;
     border-radius: 12px !important;
@@ -195,135 +263,164 @@ body, .gradio-container {
     font-weight: 600 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.08em !important;
-    margin-bottom: 12px !important;
 }
 
-.info-panel table {
-    width: 100% !important;
-    border-collapse: collapse !important;
-}
-
-.info-panel td {
-    padding: 6px 8px !important;
-    color: #b0b8d4 !important;
-    font-size: 0.9rem !important;
-    border-bottom: 1px solid #424769 !important;
-}
-
-.info-panel td:first-child { color: #676f9d !important; }
-
-.info-panel blockquote {
-    border-left: 3px solid #f9b17a !important;
-    margin: 8px 0 !important;
-    padding-left: 12px !important;
-    color: #b0b8d4 !important;
-    font-style: italic !important;
-}
-
-/* Examples */
-.examples-section {
-    background: #363b5e !important;
-    border-radius: 12px !important;
-    border: 1px solid #424769 !important;
-    padding: 16px !important;
-}
-
-/* Divider */
-.divider {
-    border: none !important;
-    border-top: 1px solid #424769 !important;
-    margin: 16px 0 !important;
-}
-
-/* Hide gradio footer */
 footer { display: none !important; }
-.svelte-1ipelgc { display: none !important; }
 """
 
-with gr.Blocks(title="Self-Correcting RAG", css=CSS) as demo:
+# ── UI ────────────────────────────────────────────────────────────────────────
 
-    gr.HTML("""
+with gr.Blocks(title="Self-Correcting RAG") as demo:
+
+    gr.HTML(f"""<style>{CSS}</style>
     <div class="app-header">
         <h1>Self-Correcting RAG</h1>
         <p>
             A retrieval system that knows when it's wrong — and fixes itself.<br>
-            When a question doesn't retrieve useful context, the system rewrites 
-            the query and tries again, instead of hallucinating an answer.
+            Upload your own documents or search the built-in dataset.
         </p>
     </div>
     """)
 
-    with gr.Row():
-        with gr.Column(scale=5):
-            question_box = gr.Textbox(
-                label="",
-                placeholder="Ask anything — e.g. Who sang Go Rest High on the Mountain?",
-                lines=2,
-                elem_classes=["input-area"],
-            )
-        with gr.Column(scale=1, min_width=120):
-            ask_btn = gr.Button(
-                "Ask →",
-                variant="primary",
-                size="lg",
-                elem_classes=["ask-btn"],
-            )
+    with gr.Tabs():
 
-    answer_box = gr.Markdown(
-        label="",
-        elem_classes=["answer-panel"],
-        value="*Your answer will appear here...*"
-    )
+        # ── Tab 1: Ask ────────────────────────────────────────────────────────
+        with gr.Tab("Ask"):
 
-    gr.HTML('<hr class="divider">')
+            with gr.Row():
+                with gr.Column(scale=5):
+                    question_box = gr.Textbox(
+                        label="Your question",
+                        placeholder="Ask anything about your documents...",
+                        lines=2,
+                        elem_classes=["input-area"],
+                    )
+                with gr.Column(scale=2):
+                    collection_selector = gr.Textbox(
+                        label="Collection",
+                        placeholder="sc_rag_docs (default) or your collection name",
+                        value="sc_rag_docs",
+                    )
+                with gr.Column(scale=1, min_width=100):
+                    ask_btn = gr.Button("Ask →", variant="primary", elem_classes=["ask-btn"])
 
-    with gr.Row():
-        with gr.Column(scale=2):
-            how_box = gr.Markdown(
-                label="",
-                elem_classes=["info-panel"],
-                value="### What happened\n\n*Ask a question to see the self-correction trace.*"
-            )
-        with gr.Column(scale=3):
-            sources_box = gr.Markdown(
-                label="",
-                elem_classes=["info-panel"],
-                value="### Sources used\n\n*Retrieved chunks will appear here.*"
-            )
-        with gr.Column(scale=1):
-            stats_box = gr.Markdown(
-                label="",
-                elem_classes=["info-panel"],
-                value="### Stats\n\n*Metrics will appear here.*"
+            answer_box = gr.Markdown(
+                value="*Your answer will appear here...*",
+                elem_classes=["answer-panel"],
             )
 
-    gr.HTML('<hr class="divider">')
+            gr.HTML('<hr style="border-color: #424769; margin: 16px 0;">')
 
-    gr.Examples(
-        examples=[
-            ["Who sang Go Rest High on the Mountain?"],
-            ["What is photosynthesis?"],
-            ["Who was the first president of the United States?"],
-            ["Where was the movie Titanic filmed?"],
-            ["What causes thunder?"],
-            ["Who wrote the book The Jungle?"],
-        ],
-        inputs=question_box,
-        label="Try these examples",
-        elem_id="examples-section",
-    )
+            with gr.Row():
+                with gr.Column(scale=2):
+                    how_box = gr.Markdown(
+                        value="### What happened\n\n*Ask a question to see the self-correction trace.*",
+                        elem_classes=["info-panel"],
+                    )
+                with gr.Column(scale=3):
+                    sources_box = gr.Markdown(
+                        value="### Sources used\n\n*Retrieved chunks will appear here.*",
+                        elem_classes=["info-panel"],
+                    )
+                with gr.Column(scale=1):
+                    stats_box = gr.Markdown(
+                        value="### Stats\n\n*Metrics will appear here.*",
+                        elem_classes=["info-panel"],
+                    )
 
-    ask_btn.click(
-        fn=ask_question,
-        inputs=[question_box],
-        outputs=[answer_box, how_box, sources_box, stats_box],
-    )
+            gr.Examples(
+                examples=[
+                    ["What is photosynthesis?",                 "sc_rag_docs"],
+                    ["Who was the first US president?",         "sc_rag_docs"],
+                    ["Who sang Go Rest High on the Mountain?",  "sc_rag_docs"],
+                    ["What causes thunder?",                    "sc_rag_docs"],
+                ],
+                inputs=[question_box, collection_selector],
+                label="Try these examples",
+            )
 
-    question_box.submit(
-        fn=ask_question,
-        inputs=[question_box],
-        outputs=[answer_box, how_box, sources_box, stats_box],
-    )
+            ask_btn.click(
+                fn=ask_question,
+                inputs=[question_box, collection_selector],
+                outputs=[answer_box, how_box, sources_box, stats_box],
+            )
+
+            question_box.submit(
+                fn=ask_question,
+                inputs=[question_box, collection_selector],
+                outputs=[answer_box, how_box, sources_box, stats_box],
+            )
+
+        # ── Tab 2: Upload Documents ───────────────────────────────────────────
+        with gr.Tab("Upload Documents"):
+
+            gr.Markdown("""
+### Upload your own documents
+
+Upload a PDF, Word (.docx), or TXT file to create your own searchable collection.
+After uploading, go to the **Ask** tab and enter your collection name to search it.
+""")
+
+            with gr.Row():
+                with gr.Column(scale=3):
+                    file_upload = gr.File(
+                        label="Upload document (PDF, DOCX, TXT)",
+                        file_types=[".pdf", ".docx", ".doc", ".txt"],
+                        type="filepath",
+                    )
+                with gr.Column(scale=2):
+                    upload_collection = gr.Textbox(
+                        label="Collection name",
+                        placeholder="e.g. my_documents",
+                        info="Give your collection a name. Use letters, numbers, underscores only.",
+                    )
+                    upload_btn = gr.Button("Upload & Index", variant="primary")
+
+            upload_status = gr.Markdown(value="")
+            doc_list_box  = gr.Markdown(value="")
+
+            gr.HTML('<hr style="border-color: #424769; margin: 16px 0;">')
+
+            gr.Markdown("### Manage documents")
+
+            with gr.Row():
+                with gr.Column(scale=3):
+                    list_collection = gr.Textbox(
+                        label="Collection name",
+                        placeholder="Enter collection name to see its documents",
+                    )
+                with gr.Column(scale=1):
+                    list_btn = gr.Button("List Documents")
+
+            list_output = gr.Markdown(value="")
+
+            with gr.Row():
+                with gr.Column(scale=2):
+                    delete_doc_id     = gr.Textbox(label="Document ID to delete", placeholder="e.g. contract_abc12345")
+                with gr.Column(scale=2):
+                    delete_collection = gr.Textbox(label="Collection name", placeholder="my_documents")
+                with gr.Column(scale=1):
+                    delete_btn = gr.Button("Delete Document", variant="stop")
+
+            delete_output = gr.Markdown(value="")
+
+            upload_btn.click(
+                fn=upload_document,
+                inputs=[file_upload, upload_collection],
+                outputs=[upload_status, doc_list_box],
+            )
+
+            list_btn.click(
+                fn=list_documents,
+                inputs=[list_collection],
+                outputs=[list_output],
+            )
+
+            delete_btn.click(
+                fn=delete_document,
+                inputs=[delete_doc_id, delete_collection],
+                outputs=[delete_output],
+            )
 
 if __name__ == "__main__":
     demo.launch(
