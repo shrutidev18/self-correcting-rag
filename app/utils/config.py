@@ -8,6 +8,7 @@ class Config: #groups all settings in one place. Every other file imports config
     GROQ_API_KEY: str    = os.getenv("GROQ_API_KEY", "")
     LLM_MODEL: str       = os.getenv("LLM_MODEL", "llama-3.1-8b-instant")
     EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+    API_KEY: str = os.getenv("API_KEY", "")
 
     CHROMA_DB_PATH: str         = os.getenv("CHROMA_DB_PATH", "./chroma_db")
     CHROMA_COLLECTION_NAME: str = os.getenv("CHROMA_COLLECTION_NAME", "sc_rag_docs")
