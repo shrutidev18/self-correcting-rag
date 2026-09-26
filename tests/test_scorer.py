@@ -14,11 +14,10 @@ def mock_scorer():
 
 
 def make_mock_response(content: str, tokens: int = 100):
-    """Helper to build a fake Groq API response."""
-    mock_response          = MagicMock()
-    mock_choice            = MagicMock()
+    mock_response = MagicMock()
+    mock_choice = MagicMock()
     mock_choice.message.content = content
-    mock_response.choices  = [mock_choice]
+    mock_response.choices = [mock_choice]
     mock_response.usage.total_tokens = tokens
     return mock_response
 
@@ -55,11 +54,11 @@ class TestScorer:
         chunks = [{"id": f"chunk_{i}", "text": f"text {i}"} for i in range(3)]
         result = scorer.score("test question", chunks)
 
-        assert "scores"      in result
-        assert "mean"        in result
-        assert "quality"     in result
-        assert "threshold"   in result
-        assert "latency_ms"  in result
+        assert "scores" in result
+        assert "mean" in result
+        assert "quality" in result
+        assert "threshold" in result
+        assert "latency_ms" in result
         assert "token_count" in result
 
     def test_score_good_quality(self, mock_scorer):

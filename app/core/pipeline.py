@@ -18,27 +18,26 @@ INSUFFICIENT_CONTEXT_MSG = (
 MAX_ATTEMPTS = 2
 
 
-# ── State Definition ──────────────────────────────────────────────────────────
+# State that flows through every node in the graph.
+# Each node receives the full state and returns only the fields it updates.
 class RAGState(TypedDict):
-    query:              str
-    current_query:      str
-    chunks:             list
-    scores:             list
-    mean_score:         float
-    quality:            str
-    reformulations:     list
-    attempts:           int
-    answer:             str
-    sources:            list
-    latency_ms:         float
-    reformulated_query: str
+    query:              str    # original user question, never changes
+    current_query:      str    # may be rewritten after reformulation
+    chunks:             list   # retrieved chunks from ChromaDB
+    scores:             list   # per-chunk scores from the scorer
+    mean_score:         float  # average of scores
+    quality:            str    # "good" or "poor"
+    reformulations:     list   # rewrites tried so far
+    attempts:           int    # how many retrieval attempts made
+    answer:             str    # final answer
+    sources:            list   # chunk IDs used in the answer
+    latency_ms:         float  # total time taken
+    reformulated_query: str    # best rewrite used (for logging/UI)
 
-
-# ── Node Functions ────────────────────────────────────────────────────────────
 
 def make_retrieve_node(retriever: Retriever):
     def retrieve_node(state: RAGState) -> dict:
-        logger.info(f"[retrieve_node] query='{state['current_query'][:60]}'")
+        logger.info(f"[retrieve] '{state['current_query'][:60]}'")
         chunks = retriever.retrieve(state["current_query"], k=config.TOP_K)
         return {"chunks": chunks}
     return retrieve_node
@@ -46,69 +45,65 @@ def make_retrieve_node(retriever: Retriever):
 
 def make_score_node(scorer: Scorer):
     def score_node(state: RAGState) -> dict:
-        scoring = scorer.score(state["current_query"], state["chunks"])
+        result = scorer.score(state["current_query"], state["chunks"])
         logger.info(
-            f"[score_node] mean={scoring['mean']} "
-            f"| quality={scoring['quality']} "
-            f"| scores={scoring['scores']}"
+            f"[score] mean={result['mean']} | quality={result['quality']} | scores={result['scores']}"
         )
         return {
-            "scores":     scoring["scores"],
-            "mean_score": scoring["mean"],
-            "quality":    scoring["quality"],
+            "scores":     result["scores"],
+            "mean_score": result["mean"],
+            "quality":    result["quality"],
         }
     return score_node
 
 
 def decide_node(state: RAGState) -> str:
+    # Router — returns the name of the next node
     if state["quality"] == "good":
-        logger.info("[decide_node] Quality good → generate")
+        logger.info("[decide] good retrieval → generate")
         return "generate"
 
     if state["attempts"] >= MAX_ATTEMPTS:
-        logger.info(f"[decide_node] Max attempts ({MAX_ATTEMPTS}) reached → fallback")
+        logger.info(f"[decide] max attempts reached → fallback")
         return "fallback"
 
-    logger.info(f"[decide_node] Quality poor, attempts={state['attempts']} → reformulate")
+    logger.info(f"[decide] poor retrieval, attempt {state['attempts']} → reformulate")
     return "reformulate"
 
 
 def make_reformulate_node(retriever: Retriever, scorer: Scorer, reformulator: Reformulator):
     def reformulate_node(state: RAGState) -> dict:
-        logger.info(f"[reformulate_node] Reformulating: '{state['current_query'][:60]}'")
+        logger.info(f"[reformulate] rewriting: '{state['current_query'][:60]}'")
         rewrites = reformulator.reformulate(state["current_query"])
 
         if not rewrites:
-            logger.warning("[reformulate_node] No rewrites generated — keeping original query")
+            logger.warning("[reformulate] no rewrites generated, keeping original")
             return {
                 "attempts":       state["attempts"] + 1,
                 "reformulations": state.get("reformulations", []),
             }
 
-        # ── Score all rewrites and pick the best one ──────────────────────────
+        # Try each rewrite, keep the one that scores highest
         best_query  = None
-        best_score  = state["mean_score"]  # must beat current score
+        best_score  = state["mean_score"]
         best_chunks = state["chunks"]
 
         for rewrite in rewrites:
-            r_chunks  = retriever.retrieve(rewrite, k=config.TOP_K)
-            r_scoring = scorer.score(rewrite, r_chunks)
-            logger.info(
-                f"[reformulate_node] Rewrite: '{rewrite[:50]}' "
-                f"| score={r_scoring['mean']}"
-            )
-            if r_scoring["mean"] > best_score:
-                best_score  = r_scoring["mean"]
-                best_query  = rewrite
-                best_chunks = r_chunks
+            chunks  = retriever.retrieve(rewrite, k=config.TOP_K)
+            scoring = scorer.score(rewrite, chunks)
+            logger.info(f"[reformulate] '{rewrite[:50]}' → score={scoring['mean']}")
 
-        # If no rewrite improved things, keep original
+            if scoring["mean"] > best_score:
+                best_score  = scoring["mean"]
+                best_query  = rewrite
+                best_chunks = chunks
+
         if best_query is None:
-            logger.info("[reformulate_node] No rewrite improved score — keeping original")
+            logger.info("[reformulate] no rewrite beat original, keeping original chunks")
             best_query  = state["current_query"]
             best_chunks = state["chunks"]
 
-        logger.info(f"[reformulate_node] Best query: '{best_query[:60]}' | score={best_score}")
+        logger.info(f"[reformulate] best: '{best_query[:60]}' score={best_score}")
 
         return {
             "current_query":      best_query,
@@ -122,7 +117,7 @@ def make_reformulate_node(retriever: Retriever, scorer: Scorer, reformulator: Re
 
 def make_generate_node(generator: Generator):
     def generate_node(state: RAGState) -> dict:
-        logger.info(f"[generate_node] Generating answer...")
+        logger.info("[generate] producing answer...")
         result = generator.generate(state["current_query"], state["chunks"])
         return {
             "answer":  result["answer"],
@@ -132,34 +127,33 @@ def make_generate_node(generator: Generator):
 
 
 def fallback_node(state: RAGState) -> dict:
-    logger.info("[fallback_node] Returning insufficient context message")
+    logger.info("[fallback] returning insufficient context message")
     return {
         "answer":  INSUFFICIENT_CONTEXT_MSG,
         "sources": [],
     }
 
 
-# ── Pipeline Class ────────────────────────────────────────────────────────────
-
 class BasicRAGPipeline:
 
     def __init__(self, collection_name: str = None):
-        # Use provided collection name or fall back to default from config
         self.collection_name = collection_name or config.CHROMA_COLLECTION_NAME
         self.retriever    = Retriever(collection_name=self.collection_name)
         self.generator    = Generator()
         self.scorer       = Scorer()
         self.reformulator = Reformulator()
         self.graph        = self._build_graph()
-        logger.info(f"BasicRAGPipeline (LangGraph) ready | collection={self.collection_name}")
+        logger.info(f"Pipeline ready | collection={self.collection_name}")
 
-    def _build_graph(self) -> any:
+    def _build_graph(self):
         graph = StateGraph(RAGState)
+
         graph.add_node("retrieve",    make_retrieve_node(self.retriever))
         graph.add_node("score",       make_score_node(self.scorer))
         graph.add_node("reformulate", make_reformulate_node(self.retriever, self.scorer, self.reformulator))
         graph.add_node("generate",    make_generate_node(self.generator))
         graph.add_node("fallback",    fallback_node)
+
         graph.add_edge("retrieve", "score")
         graph.add_conditional_edges("score", decide_node, {
             "generate":    "generate",
@@ -169,10 +163,11 @@ class BasicRAGPipeline:
         graph.add_edge("reformulate", "retrieve")
         graph.add_edge("generate",    END)
         graph.add_edge("fallback",    END)
+
         graph.set_entry_point("retrieve")
         return graph.compile()
 
-    def run(self, query: str, k: int = None) -> dict:
+    def run(self, query: str) -> dict:
         t0 = time.time()
 
         initial_state: RAGState = {

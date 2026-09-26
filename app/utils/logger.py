@@ -1,4 +1,3 @@
-#Every query you ever run gets saved to this file,  you can load this file with pandas and find your 20 worst queries, those become the failure analysis examples in your research paper.
 import json
 import logging
 import sys
@@ -16,6 +15,7 @@ logging.basicConfig(
 logger = logging.getLogger("sc_rag")
 
 QUERY_LOG_PATH = LOG_DIR / "query_log.jsonl"
+
 
 def log_query(
     query: str,
@@ -39,4 +39,4 @@ def log_query(
     }
     with open(QUERY_LOG_PATH, "a", encoding="utf-8") as f:
         f.write(json.dumps(record) + "\n")
-    logger.info(f"Query logged | attempts={attempts} | latency={latency_ms:.0f}ms")
+    logger.info(f"logged | attempts={attempts} | latency={latency_ms:.0f}ms")

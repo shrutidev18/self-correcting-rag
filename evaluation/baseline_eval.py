@@ -12,7 +12,7 @@ from app.utils.config import config
 from app.utils.logger import logger
 
 TEST_QUESTIONS_PATH = Path("./data/test_questions.json")
-RESULTS_PATH        = Path("./evaluation/results/baseline_scores.json")
+RESULTS_PATH = Path("./evaluation/results/baseline_scores.json")
 RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 client = Groq(api_key=config.GROQ_API_KEY)
@@ -93,35 +93,31 @@ Reply with ONLY a number: 0, 0.5, or 1"""
 
 
 def run_baseline_evaluation():
-    logger.info("Loading test questions...")
+    logger.info("loading test questions...")
     with open(TEST_QUESTIONS_PATH, "r", encoding="utf-8") as f:
         test_questions = json.load(f)[:100]
 
-    logger.info(f"Running BASELINE evaluation on {len(test_questions)} questions...")
+    logger.info(f"running baseline evaluation on {len(test_questions)} questions...")
 
-    # ── Direct retriever + generator, NO scorer, NO self-correction ──────────
     retriever = Retriever()
     generator = Generator()
 
-    faithfulness_scores   = []
-    relevancy_scores      = []
+    faithfulness_scores = []
+    relevancy_scores = []
     context_recall_scores = []
-    individual_results    = []
+    individual_results = []
 
     for i, q in enumerate(test_questions):
         logger.info(f"[{i+1}/{len(test_questions)}] {q['question'][:60]}...")
 
-        # Retrieve chunks directly
-        chunks   = retriever.retrieve(q["question"], k=config.TOP_K)
+        chunks = retriever.retrieve(q["question"], k=config.TOP_K)
         contexts = [c["text"] for c in chunks]
 
-        # Generate answer directly
-        result   = generator.generate(q["question"], chunks)
-        answer   = result["answer"]
+        result = generator.generate(q["question"], chunks)
+        answer = result["answer"]
         question = q["question"]
-        truth    = q["answer"]
+        truth = q["answer"]
 
-        # Score the answer
         f_score = score_faithfulness(answer, contexts)
         r_score = score_answer_relevancy(question, answer)
         c_score = score_context_recall(contexts, truth)
@@ -142,8 +138,8 @@ def run_baseline_evaluation():
         logger.info(f"  F={f_score} | R={r_score} | C={c_score}")
 
     scores = {
-        "faithfulness":     round(sum(faithfulness_scores)   / len(faithfulness_scores),   4),
-        "answer_relevancy": round(sum(relevancy_scores)      / len(relevancy_scores),      4),
+        "faithfulness":     round(sum(faithfulness_scores) / len(faithfulness_scores), 4),
+        "answer_relevancy": round(sum(relevancy_scores) / len(relevancy_scores), 4),
         "context_recall":   round(sum(context_recall_scores) / len(context_recall_scores), 4),
         "num_questions":    len(test_questions),
         "individual":       individual_results,
@@ -160,7 +156,7 @@ def run_baseline_evaluation():
     print(f"Context Recall   : {scores['context_recall']}")
     print(f"Questions scored : {scores['num_questions']}")
     print("─" * 50)
-    print(f"Saved → {RESULTS_PATH}")
+    print(f"saved → {RESULTS_PATH}")
 
 
 if __name__ == "__main__":

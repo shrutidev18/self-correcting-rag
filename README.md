@@ -100,6 +100,9 @@ END retrieve_node (loop back)
 | Vector DB | ChromaDB (persistent) |
 | Orchestration | LangGraph |
 | Dataset | Natural Questions (HuggingFace) — 20,000 docs |
+| API Framework | FastAPI + Uvicorn |
+| Authentication | API Key (X-API-Key header) |
+| Document Parsing | pypdf, python-docx |
 | UI | Gradio |
 | Deployment | Docker |
 | Testing | pytest (31 tests, all passing) |
@@ -109,34 +112,43 @@ END retrieve_node (loop back)
 ## Project Structure
 
 self-correcting-rag/
+├── api/
+│   ├── main.py                     ← FastAPI REST API (4 endpoints)
+│   └── auth.py                     ← API key authentication
 ├── app/
-│ ├── core/
-│ │ ├── retriever.py ← ChromaDB + Sentence-BERT search
-│ │ ├── generator.py ← Groq LLM answer generation
-│ │ ├── scorer.py ← LLM-based chunk quality scoring
-│ │ ├── reformulator.py ← Query rewriting engine
-│ │ └── pipeline.py ← LangGraph state machine
-│ └── utils/
-│ ├── config.py ← Environment settings
-│ └── logger.py ← JSONL logging
+│   ├── core/
+│   │   ├── retriever.py            ← ChromaDB + Sentence-BERT search
+│   │   ├── generator.py            ← Groq LLM answer generation
+│   │   ├── scorer.py               ← LLM-based chunk quality scoring
+│   │   ├── reformulator.py         ← Query rewriting engine
+│   │   ├── pipeline.py             ← LangGraph state machine
+│   │   ├── document_processor.py   ← PDF, Word, TXT parser
+│   │   └── indexer.py              ← Multi-collection indexing
+│   └── utils/
+│       ├── config.py               ← Environment settings
+│       └── logger.py               ← JSONL logging
 ├── evaluation/
-│ ├── baseline_eval.py ← Baseline RAG evaluation
-│ ├── scrag_eval.py ← Self-correcting RAG evaluation
-│ └── results/
-│ ├── baseline_scores.json
-│ ├── scrag_scores.json
-│ └── comparison.json
+│   ├── baseline_eval.py            ← Baseline RAG evaluation
+│   ├── scrag_eval.py               ← Self-correcting RAG evaluation
+│   └── results/
+│       ├── baseline_scores.json
+│       ├── scrag_scores.json
+│       └── comparison.json
 ├── tests/
-│ ├── test_retriever.py ← 11 tests
-│ ├── test_scorer.py ← 11 tests
-│ └── test_reformulator.py ← 9 tests
+│   ├── test_retriever.py           ← 11 tests
+│   ├── test_scorer.py              ← 11 tests
+│   └── test_reformulator.py        ← 9 tests
 ├── ui/
-│ └── gradio_app.py ← Browser UI
+│   └── gradio_app.py               ← Browser UI (Ask + Upload tabs)
 ├── data/
-│ └── test_questions.json ← 100 evaluation questions
+│   └── test_questions.json         ← 100 evaluation questions
+├── assets/
+│   └── architecture.png            ← Architecture diagram
 ├── Dockerfile
 ├── docker-compose.yml
-└── requirements.txt
+├── requirements.txt                ← Full dependencies (dev + eval)
+├── requirements-app.txt            ← Minimal dependencies (Docker)
+└── README.md
 
 
 ---
@@ -193,6 +205,75 @@ pytest tests/ -v
 
 ---
 
+---
+
+## Upload Your Own Documents
+
+You can upload your own PDF, Word (.docx), or TXT files and ask questions against them.
+
+### Via the UI
+
+1. Open `http://127.0.0.1:7860`
+2. Go to the **Upload Documents** tab
+3. Upload your file and give your collection a name (e.g. `my_docs`)
+4. Go to the **Ask** tab, set collection to `my_docs`, and ask questions
+
+### Via the API
+
+```bash
+# Upload a document
+curl -X POST http://127.0.0.1:8000/upload \
+  -H "X-API-Key: your_api_key_here" \
+  -F "file=@yourfile.pdf" \
+  -F "collection_name=my_docs"
+
+# Ask a question against it
+curl -X POST http://127.0.0.1:8000/ask \
+  -H "X-API-Key: your_api_key_here" \
+  -H "Content-Type: application/json" \
+  -d '{"question": "What is this document about?", "collection_name": "my_docs"}'
+```
+
+Each user gets a private collection — completely isolated from the default dataset and other collections.
+
+---
+
+## REST API
+
+The system exposes a FastAPI REST API alongside the Gradio UI.
+
+**Run the API:**
+```bash
+uvicorn api.main:app --reload --port 8000
+```
+
+**Interactive docs:** `http://127.0.0.1:8000/docs`
+
+**Authentication:** Every request requires an `X-API-Key` header.
+
+| Endpoint | Method | Description |
+|---|---|---|
+| `/ask` | POST | Ask a question, get self-correcting answer |
+| `/upload` | POST | Upload and index a document |
+| `/collections/{name}/documents` | GET | List documents in a collection |
+| `/collections/{name}/documents/{doc_id}` | DELETE | Delete a document |
+
+**Example response from `/ask`:**
+```json
+{
+  "question": "What is DNS tunnelling?",
+  "answer": "DNS tunnelling is a technique where malware abuses DNS as a communication channel...",
+  "collection": "my_docs",
+  "attempts": 1,
+  "reformulated_query": "",
+  "latency_ms": 1839.5,
+  "retrieval_quality": "good",
+  "mean_score": 2.8,
+  "sources": ["sih_document_10e83cdc_chunk_3"]
+}
+```
+---
+
 ## Get a Free Groq API Key
 
 1. Go to [https://console.groq.com](https://console.groq.com)
@@ -223,7 +304,7 @@ pytest tests/ -v
 ## Built By
 
 **Shruti Dev**  
-[LinkedIn](www.linkedin.com/in/shrutiidev) · [GitHub](https://github.com/shrutidev18)
+[LinkedIn](https://www.linkedin.com/in/shrutiidev) · [GitHub](https://github.com/shrutidev18)
 
 ---
 

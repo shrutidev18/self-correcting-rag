@@ -1,10 +1,15 @@
 groq
 sentence-transformers
-chromadb
+chromadb>=0.5.20
 python-dotenv
 tqdm
-numpy
+numpy<2
 gradio
 langgraph
 langchain-core
+fastapi
+uvicorn
+python-multipart
+pypdf
+python-docx
 pysqlite3-binary

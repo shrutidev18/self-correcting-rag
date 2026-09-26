@@ -4,21 +4,22 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
-class Config: #groups all settings in one place. Every other file imports config from here instead of reading .env themselves.
-    GROQ_API_KEY: str    = os.getenv("GROQ_API_KEY", "")
-    LLM_MODEL: str       = os.getenv("LLM_MODEL", "llama-3.1-8b-instant")
+
+class Config:
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
+    LLM_MODEL: str = os.getenv("LLM_MODEL", "qwen/qwen3.8-27b")
     EMBEDDING_MODEL: str = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
     API_KEY: str = os.getenv("API_KEY", "")
 
-    CHROMA_DB_PATH: str         = os.getenv("CHROMA_DB_PATH", "./chroma_db")
+    CHROMA_DB_PATH: str = os.getenv("CHROMA_DB_PATH", "./chroma_db")
     CHROMA_COLLECTION_NAME: str = os.getenv("CHROMA_COLLECTION_NAME", "sc_rag_docs")
 
-    TOP_K: int         = int(os.getenv("TOP_K", 5))
-    CHUNK_SIZE: int    = int(os.getenv("CHUNK_SIZE", 256))
+    TOP_K: int = int(os.getenv("TOP_K", 5))
+    CHUNK_SIZE: int = int(os.getenv("CHUNK_SIZE", 256))
     CHUNK_OVERLAP: int = int(os.getenv("CHUNK_OVERLAP", 32))
 
     QUALITY_THRESHOLD: float = float(os.getenv("QUALITY_THRESHOLD", 3.0))
-    MAX_RETRIES: int         = int(os.getenv("MAX_RETRIES", 2))
+    MAX_RETRIES: int = int(os.getenv("MAX_RETRIES", 2))
 
     def validate(self):
         if not self.GROQ_API_KEY:
@@ -28,5 +29,6 @@ class Config: #groups all settings in one place. Every other file imports config
                 "2. Add your key from https://console.groq.com"
             )
         return self
+
 
 config = Config()

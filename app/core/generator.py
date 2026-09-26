@@ -1,4 +1,6 @@
+import re
 import time
+
 from groq import Groq
 
 from app.utils.config import config
@@ -25,7 +27,6 @@ def build_prompt(query: str, chunks: list) -> str:
             f"{chunk['text']}"
         )
     context_str = "\n\n".join(context_lines)
-
     return (
         f"Context:\n{context_str}\n\n"
         f"Question: {query}\n\n"
@@ -38,14 +39,14 @@ class Generator:
     def __init__(self):
         config.validate()
         self.client = Groq(api_key=config.GROQ_API_KEY)
-        self.model   = config.LLM_MODEL
-        logger.info(f"Generator ready | model: {self.model}")
+        self.model = config.LLM_MODEL
+        logger.info(f"Generator ready | model={self.model}")
 
     def generate(self, query: str, chunks: list) -> dict:
         if not chunks:
             return {
-                "answer":     "I don't have enough information in the provided context to answer this.",
-                "sources":    [],
+                "answer": "I don't have enough information in the provided context to answer this.",
+                "sources": [],
                 "raw_output": "",
                 "latency_ms": 0.0,
             }
@@ -57,7 +58,7 @@ class Generator:
             model=self.model,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user",   "content": prompt},
+                {"role": "user", "content": prompt},
             ],
             temperature=0.1,
             max_tokens=512,
@@ -65,18 +66,17 @@ class Generator:
 
         latency_ms = (time.time() - t0) * 1000
         raw_output = response.choices[0].message.content.strip()
-        sources    = self._parse_sources(raw_output, chunks)
-        answer     = raw_output.split("Sources:")[0].strip()
+        sources = self._parse_sources(raw_output, chunks)
+        answer = raw_output.split("Sources:")[0].strip()
 
         return {
-            "answer":     answer,
-            "sources":    sources,
+            "answer": answer,
+            "sources": sources,
             "raw_output": raw_output,
             "latency_ms": round(latency_ms, 2),
         }
 
     def _parse_sources(self, raw_output: str, chunks: list) -> list:
-        import re
         match = re.search(r"Sources:\s*\[(.+?)\]", raw_output)
         if match:
             return [s.strip() for s in match.group(1).split(",")]

@@ -7,8 +7,7 @@ from app.utils.config import config
 from app.utils.logger import logger
 
 
-# ── Prompt ────────────────────────────────────────────────────────────────────
-SCORER_SYSTEM = "You are a relevance judge. You must respond with exactly one digit: 1, 2, 3, 4, or 5. Nothing else."
+SCORER_SYSTEM = "You are a relevance judge. Respond with exactly one digit: 1, 2, 3, 4, or 5. Nothing else."
 
 SCORER_PROMPT = """You are a relevance judge. Given a question and a document chunk,
 rate how useful this chunk is for answering the question.
@@ -26,6 +25,7 @@ Respond with ONLY a number 1-5."""
 
 
 def _parse_score(raw: str) -> int:
+    # LLMs sometimes return "Score: 4" or "4/5" instead of just "4"
     raw = raw.strip()
     if raw in {"1", "2", "3", "4", "5"}:
         return int(raw)
@@ -40,10 +40,10 @@ class Scorer:
 
     def __init__(self, threshold: float = None):
         config.validate()
-        self.client    = Groq(api_key=config.GROQ_API_KEY)
-        self.model     = config.LLM_MODEL
+        self.client = Groq(api_key=config.GROQ_API_KEY)
+        self.model = config.LLM_MODEL
         self.threshold = threshold if threshold is not None else config.QUALITY_THRESHOLD
-        logger.info(f"Scorer ready | model: {self.model} | threshold: {self.threshold}")
+        logger.info(f"Scorer ready | model={self.model} | threshold={self.threshold}")
 
     def _score_single_chunk(self, query: str, chunk_text: str) -> tuple[int, int]:
         prompt = SCORER_PROMPT.format(
@@ -55,60 +55,57 @@ class Scorer:
             model=self.model,
             messages=[
                 {"role": "system", "content": SCORER_SYSTEM},
-                {"role": "user",   "content": prompt},
+                {"role": "user", "content": prompt},
             ],
             temperature=0.0,
             max_tokens=10,
         )
 
-        raw    = response.choices[0].message.content.strip()
-        score  = _parse_score(raw)
+        raw = response.choices[0].message.content.strip()
+        score = _parse_score(raw)
         tokens = response.usage.total_tokens if response.usage else 0
 
-        logger.debug(f"Chunk scored {score} (raw='{raw}', tokens={tokens})")
+        logger.debug(f"chunk scored {score} (raw='{raw}', tokens={tokens})")
         return score, tokens
 
     def score(self, query: str, chunks: list) -> dict:
         if not chunks:
-            logger.warning("Scorer received empty chunk list")
+            logger.warning("scorer received empty chunk list")
             return {
-                "scores":      [],
-                "mean":        0.0,
-                "quality":     "poor",
-                "threshold":   self.threshold,
-                "latency_ms":  0.0,
+                "scores": [],
+                "mean": 0.0,
+                "quality": "poor",
+                "threshold": self.threshold,
+                "latency_ms": 0.0,
                 "token_count": 0,
             }
 
-        t0           = time.time()
-        scores       = []
+        t0 = time.time()
+        scores = []
         total_tokens = 0
 
         for i, chunk in enumerate(chunks):
-            logger.info(f"Scoring chunk {i+1}/{len(chunks)} | id={chunk['id']}")
+            logger.info(f"scoring chunk {i+1}/{len(chunks)} | id={chunk['id']}")
             try:
                 score, tokens = self._score_single_chunk(query, chunk["text"])
             except Exception as e:
-                logger.warning(f"Scoring failed for chunk {chunk['id']}: {e} — defaulting to 3")
+                logger.warning(f"scoring failed for chunk {chunk['id']}: {e} — defaulting to 3")
                 score, tokens = 3, 0
 
             scores.append(score)
             total_tokens += tokens
 
         mean_score = round(sum(scores) / len(scores), 3)
-        quality    = "good" if mean_score >= self.threshold else "poor"
+        quality = "good" if mean_score >= self.threshold else "poor"
         latency_ms = round((time.time() - t0) * 1000, 2)
 
-        logger.info(
-            f"Scoring complete | scores={scores} | mean={mean_score} "
-            f"| quality={quality} | tokens={total_tokens}"
-        )
+        logger.info(f"done | scores={scores} | mean={mean_score} | quality={quality}")
 
         return {
-            "scores":      scores,
-            "mean":        mean_score,
-            "quality":     quality,
-            "threshold":   self.threshold,
-            "latency_ms":  latency_ms,
+            "scores": scores,
+            "mean": mean_score,
+            "quality": quality,
+            "threshold": self.threshold,
+            "latency_ms": latency_ms,
             "token_count": total_tokens,
         }

@@ -14,10 +14,10 @@ def mock_reformulator():
 
 
 def make_mock_response(content: str):
-    mock_response               = MagicMock()
-    mock_choice                 = MagicMock()
+    mock_response = MagicMock()
+    mock_choice = MagicMock()
     mock_choice.message.content = content
-    mock_response.choices       = [mock_choice]
+    mock_response.choices = [mock_choice]
     return mock_response
 
 

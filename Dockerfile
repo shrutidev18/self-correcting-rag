@@ -6,7 +6,8 @@ COPY requirements-app.txt .
 
 RUN pip install --upgrade pip \
  && pip install --only-binary numpy "numpy<2" \
- && pip install --no-cache-dir -r requirements-app.txt
+ && pip install --no-cache-dir -r requirements-app.txt \
+ && python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 
 COPY . .
 
