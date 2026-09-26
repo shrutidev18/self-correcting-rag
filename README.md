@@ -1,4 +1,4 @@
-# RETRACE — Self-Correcting RAG
+# RETRACE : Self Correcting RAG
 
 A Retrieval-Augmented Generation system that detects when retrieval fails and automatically fixes itself instead of hallucinating an answer.
 
@@ -16,7 +16,7 @@ User Query → Retrieve → Generate → Answer (even if wrong)
 
 ## The Solution
 
-Instead of hoping retrieval works, this system checks — and retries if it doesn't.
+Instead of hoping retrieval works, this system checks and retries if it doesn't.
 
 ```
 User Query → Retrieve → Score chunks → Good? → Generate → Answer
@@ -59,7 +59,7 @@ Evaluated on 100 questions from the Natural Questions dataset:
 
 When a question comes in, the system embeds it using `sentence-transformers/all-MiniLM-L6-v2` and searches 60,000+ indexed chunks in ChromaDB.
 
-Before generating an answer, it scores each retrieved chunk 1-5 — asking the LLM "does this actually answer the question?" If the mean score is too low, it rewrites the query three ways (broader terms, synonyms, sub-questions), retrieves again for each rewrite, and picks whichever scored best.
+Before generating an answer, it scores each retrieved chunk 1-5 , asking the LLM "does this actually answer the question?" If the mean score is too low, it rewrites the query three ways (broader terms, synonyms, sub-questions), retrieves again for each rewrite, and picks whichever scored best.
 
 If even the best rewrite doesn't produce useful context, it returns "I don't have enough information" instead of guessing.
 
@@ -142,7 +142,7 @@ self-correcting-rag/
 
 ## Quick Start
 
-### Option 1 — Docker (Recommended)
+### Option 1 : Docker (Recommended)
 
 ```bash
 git clone https://github.com/shrutidev18/self-correcting-rag.git
@@ -156,7 +156,7 @@ docker compose up
 
 Open `http://127.0.0.1:7860`
 
-### Option 2 — Local
+### Option 2 : Local
 
 ```bash
 git clone https://github.com/shrutidev18/self-correcting-rag.git
@@ -256,7 +256,7 @@ Interactive docs at `http://127.0.0.1:8000/docs`. Every request requires an `X-A
 
 - Answer Relevancy improved by 8.4% with self-correction enabled
 - The scorer works well for clear cases (score 5 or 1) but struggles with ambiguous chunks
-- Reformulation helped most when the original query was too colloquial — e.g. "who sang go rest high on the mountain" → "original artist of Go Rest High on That Mountain"
+- Reformulation helped most when the original query was too colloquial : e.g. "who sang go rest high on the mountain" → "original artist of Go Rest High on That Mountain"
 - The system correctly refused to answer rather than hallucinate in all fallback cases
 
 ---
@@ -265,8 +265,8 @@ Interactive docs at `http://127.0.0.1:8000/docs`. Every request requires an `X-A
 
 - Scorer adds latency (~2-5 seconds per query for 5 scoring calls)
 - Daily token limit on Groq free tier limits large-scale evaluation
-- The scorer sometimes gives harsh scores which can incorrectly flag good retrievals as poor — a larger model would judge more consistently
-- Self-correction only retries once — multiple retries could improve recall further
+- The scorer sometimes gives harsh scores which can incorrectly flag good retrievals as poor a larger model would judge more consistently
+- Self-correction only retries once multiple retries could improve recall further
 
 ---
 
