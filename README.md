@@ -1,9 +1,8 @@
-# Self-Correcting RAG System
+# RETRACE — Self-Correcting RAG
 
 A Retrieval-Augmented Generation system that detects when retrieval fails and automatically fixes itself instead of hallucinating an answer.
 
-![UI Screenshot](assets/ui_screenshot1.png)
-![UI Screenshot 2](assets/ui_screenshot2.png)
+![UI Screenshot](assets/ui_screenshot.png)
 
 ---
 
@@ -11,27 +10,27 @@ A Retrieval-Augmented Generation system that detects when retrieval fails and au
 
 Standard RAG systems blindly trust whatever documents they retrieve. When the retrieved chunks don't actually contain the answer, the LLM still tries to answer and hallucinates. There's no mechanism to detect this failure or do anything about it.
 
+```
 User Query → Retrieve → Generate → Answer (even if wrong)
-
+```
 
 ## The Solution
 
-This system scores the quality of retrieved chunks before generating an answer. If the score is too low, it rewrites the query, retrieves again, and picks the best result. If nothing helps, it honestly says it doesn't have enough information.
+Instead of hoping retrieval works, this system checks — and retries if it doesn't.
 
+```
 User Query → Retrieve → Score chunks → Good? → Generate → Answer
-↓
-Poor? → Rewrite query → Retrieve again → Generate → Answer
-↓
-Still poor? → "Insufficient context"
-
+                                      ↓
+                                    Poor? → Rewrite query → Retrieve again → Generate → Answer
+                                                                           ↓
+                                                                    Still poor? → "Insufficient context"
+```
 
 ---
 
 ## Demo
 
-[![Demo Video](assets/demo_thumbnail.png)](assets/demo.mp4)
-
-> Or watch the demo: [Link to video]
+<!-- Add your screen recording link here -->
 
 ---
 
@@ -58,36 +57,23 @@ Evaluated on 100 questions from the Natural Questions dataset:
 
 ### How It Works
 
-**1. Retrieval**
-The user's question is converted to a vector embedding using `sentence-transformers/all-MiniLM-L6-v2` and searched against 60,000+ indexed chunks in ChromaDB.
+When a question comes in, the system embeds it using `sentence-transformers/all-MiniLM-L6-v2` and searches 60,000+ indexed chunks in ChromaDB.
 
-**2. Quality Scoring**
-Each retrieved chunk is scored 1-5 by the LLM:
-- **5** — Directly answers the question
-- **4** — Relevant and useful
-- **3** — Somewhat relevant
-- **2** — Marginally related
-- **1** — Completely irrelevant
+Before generating an answer, it scores each retrieved chunk 1-5 — asking the LLM "does this actually answer the question?" If the mean score is too low, it rewrites the query three ways (broader terms, synonyms, sub-questions), retrieves again for each rewrite, and picks whichever scored best.
 
-The mean score is compared against a threshold. If below → self-correction triggers.
+If even the best rewrite doesn't produce useful context, it returns "I don't have enough information" instead of guessing.
 
-**3. Query Reformulation**
-The LLM rewrites the original query 3 ways — broader terms, synonyms, sub-questions. Each rewrite is retrieved and scored. The best one is selected.
+The whole flow runs as a LangGraph state machine with 6 nodes:
 
-**4. Generation**
-The final answer is generated using the best available chunks.
-
-**5. LangGraph State Machine**
-The entire pipeline is implemented as a LangGraph StateGraph with 6 nodes:
-
+```
 retrieve_node → score_node → decide_node
-↓
-┌─────────────┼──────────────┐
-↓ ↓ ↓
-generate_node reformulate_node fallback_node
-↓ ↓
-END retrieve_node (loop back)
-
+                                  ↓
+                    ┌─────────────┼──────────────┐
+                    ↓             ↓              ↓
+              generate_node  reformulate_node  fallback_node
+                    ↓             ↓
+                   END        retrieve_node (loop back)
+```
 
 ---
 
@@ -111,6 +97,7 @@ END retrieve_node (loop back)
 
 ## Project Structure
 
+```
 self-correcting-rag/
 ├── api/
 │   ├── main.py                     ← FastAPI REST API (4 endpoints)
@@ -149,7 +136,7 @@ self-correcting-rag/
 ├── requirements.txt                ← Full dependencies (dev + eval)
 ├── requirements-app.txt            ← Minimal dependencies (Docker)
 └── README.md
-
+```
 
 ---
 
@@ -158,43 +145,31 @@ self-correcting-rag/
 ### Option 1 — Docker (Recommended)
 
 ```bash
-# Clone the repo
 git clone https://github.com/shrutidev18/self-correcting-rag.git
 cd self-correcting-rag
 
-# Add your Groq API key to .env
 cp .env.example .env
-# Edit .env and add GROQ_API_KEY=your_key_here
+# Edit .env and add GROQ_API_KEY and API_KEY
 
-# Run
 docker compose up
-
-# Open browser
-http://127.0.0.1:7860
 ```
+
+Open `http://127.0.0.1:7860`
 
 ### Option 2 — Local
 
 ```bash
-# Clone and setup
 git clone https://github.com/shrutidev18/self-correcting-rag.git
 cd self-correcting-rag
 python -m venv venv
 venv\Scripts\activate  # Windows
 pip install -r requirements.txt
 
-# Add your Groq API key
 cp .env.example .env
-# Edit .env and add GROQ_API_KEY=your_key_here
+# Edit .env and add GROQ_API_KEY and API_KEY
 
-# Index documents (first time only)
-python data/download_beir.py
-
-# Run UI
+python data/download_beir.py  # first time only
 python ui/gradio_app.py
-
-# Or run CLI
-python cli.py "What is photosynthesis?"
 ```
 
 ### Run Tests
@@ -202,8 +177,6 @@ python cli.py "What is photosynthesis?"
 ```bash
 pytest tests/ -v
 ```
-
----
 
 ---
 
@@ -216,7 +189,7 @@ You can upload your own PDF, Word (.docx), or TXT files and ask questions agains
 1. Open `http://127.0.0.1:7860`
 2. Go to the **Upload Documents** tab
 3. Upload your file and give your collection a name (e.g. `my_docs`)
-4. Go to the **Ask** tab, set collection to `my_docs`, and ask questions
+4. Go to the **Ask** tab, select `my_docs` from the dropdown, and ask questions
 
 ### Via the API
 
@@ -240,16 +213,11 @@ Each user gets a private collection — completely isolated from the default dat
 
 ## REST API
 
-The system exposes a FastAPI REST API alongside the Gradio UI.
-
-**Run the API:**
 ```bash
 uvicorn api.main:app --reload --port 8000
 ```
 
-**Interactive docs:** `http://127.0.0.1:8000/docs`
-
-**Authentication:** Every request requires an `X-API-Key` header.
+Interactive docs at `http://127.0.0.1:8000/docs`. Every request requires an `X-API-Key` header.
 
 | Endpoint | Method | Description |
 |---|---|---|
@@ -272,6 +240,7 @@ uvicorn api.main:app --reload --port 8000
   "sources": ["sih_document_10e83cdc_chunk_3"]
 }
 ```
+
 ---
 
 ## Get a Free Groq API Key
@@ -288,7 +257,7 @@ uvicorn api.main:app --reload --port 8000
 - Answer Relevancy improved by 8.4% with self-correction enabled
 - The scorer works well for clear cases (score 5 or 1) but struggles with ambiguous chunks
 - Reformulation helped most when the original query was too colloquial — e.g. "who sang go rest high on the mountain" → "original artist of Go Rest High on That Mountain"
-- The system correctly refused to answer rather than hallucinate in all fallback ca-
+- The system correctly refused to answer rather than hallucinate in all fallback cases
 
 ---
 
@@ -296,14 +265,14 @@ uvicorn api.main:app --reload --port 8000
 
 - Scorer adds latency (~2-5 seconds per query for 5 scoring calls)
 - Daily token limit on Groq free tier limits large-scale evaluation
-- The scorer sometimes gives harsh scores (all 1s except one 5) which can incorrectly flag good retrievals as poor, a larger model would judge more consistently
+- The scorer sometimes gives harsh scores which can incorrectly flag good retrievals as poor — a larger model would judge more consistently
 - Self-correction only retries once — multiple retries could improve recall further
 
 ---
 
 ## Built By
 
-**Shruti Dev**  
+**Shruti Dev**
 [LinkedIn](https://www.linkedin.com/in/shrutiidev) · [GitHub](https://github.com/shrutidev18)
 
 ---
